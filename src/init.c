@@ -3,28 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: smallem <smallem@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 18:52:38 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/07/17 16:42:59 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/07/22 18:13:46 by smallem          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static void printtab(char **tab)
-{
-	size_t i;
+// static void printtab(char **tab)
+// {
+// 	size_t i;
 
-	i = 0;
-	printf("\n");
-	while (tab[i])
-	{
-		printf("ind = %zu str=%s\n", i, tab[i]);
-		i++;
-	}
-	printf("\n");
-}
+// 	i = 0;
+// 	printf("\n");
+// 	while (tab[i])
+// 	{
+// 		printf("ind = %zu str=%s\n", i, tab[i]);
+// 		i++;
+// 	}
+// 	printf("\n");
+// }
 
 char	*ms_parsing(char *input, int *exit_status)
 {
@@ -45,34 +45,30 @@ char	*ms_parsing(char *input, int *exit_status)
 	return (input);
 }
 
-t_exe *ms_init(char *input, int *exit_status)
+t_exe *ms_init(char *input, t_data *g_data)
 {
-	size_t	nbr_pipe;
 	t_exe	*exe;
 	size_t	i;
-	
-	nbr_pipe = ms_count_char(input, TK_PIPE);
-	exe = (t_exe *) malloc(sizeof(t_exe) * (nbr_pipe + 1));
+
+	exe = (t_exe *) malloc(sizeof(t_exe) * (g_data->nb_pipe + 1));
 	if (!exe)
 		ms_exit(MALLOC_ERR);
-	input = ms_parsing(input, exit_status);
-	printf("input = %s\n", input);
+	input = ms_parsing(input, &g_data->exit_status);
 	i = 0;
-	while (i <= nbr_pipe)
+	while (i <= (size_t)g_data->nb_pipe)
 	{
 		exe[i].index = i;
-		exe[i].nbr_pipe = nbr_pipe;
 		exe[i].fd_in = ms_open(&input, TK_LESS);
-		// printf("in = %d\n",exe[i].fd_in);
 		exe[i].fd_out = ms_open(&input, TK_GREATER);
-		// printf("out = %d\n",exe[i].fd_out);
-		// printf("size = %zu", split_size(input));
-		exe[i].cmd = ms_split(&input, split_size(input));
-		printf("\n---------- %zu ----------\n", i);
-		printtab(exe[i].cmd);
+		//printf("\n---------- %zu ----------\n", i);
+		exe[i].cmd = ms_split(&input);
+		if (!check_cmd(exe[i].cmd[0]))
+			exe[i].path = find_path(exe[i].cmd[0], g_data);
+		else
+			exe[i].path = NULL;
+		//printtab(exe[i].cmd);
 		i++;
 	}
-	printf("\nstr = %s\n", input);
 	free(input);
-	return(NULL);
+	return(exe);
 }

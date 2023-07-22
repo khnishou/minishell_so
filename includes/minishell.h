@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: smallem <smallem@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 12:02:20 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/07/16 22:28:16 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/07/22 18:01:40 by smallem          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 #include <stdbool.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+#include <errno.h>
 
 #define RED     "\x1b[31m"
 #define GREEN   "\x1b[32m"
@@ -33,8 +34,9 @@
 typedef enum e_error_code
 {
 	VALID,
-	ARGC_ERR,
 	MALLOC_ERR,
+    QLAWI_ERR,
+    ARGC_ERR,
 }					t_error;
 
 enum e_token
@@ -58,29 +60,40 @@ typedef struct s_exe
 {
     size_t              index;
     char                **cmd;
+    char                *path;
     int                 fd_in;
     int                 fd_out;
-    size_t              nbr_pipe;
 	int		            pipe[2];
+    pid_t               pid;
     
 }	t_exe;
+
+typedef struct  s_data
+{
+    int     exit_status;
+    char    **envp;
+    int     nb_pipe;
+}   t_data;
 
 char	    *ms_swapstr(char *src, char *swap, size_t start, size_t len);
 char        *quote_str_get(char *str, size_t tk_count);
 int         ms_open(char **str, char token);
 size_t      ms_count_char(char *input, char c);
 
-size_t	split_size(char *str);
-char	    **ms_split(char **str, size_t size);
+
+char	    **ms_split(char **str);
 
 size_t      token_dollar(char **str, int index, int *exit_status);
 size_t      token_quote(char **str, size_t i, char token, int *exit_status);
 int         token_redirect(char **str, size_t index, int fd, char token);
 int         token_append(char **str, size_t index, int fd);
 size_t      token_heredoc(char **str, size_t index);
+void	launch(t_exe *exe, t_data *g_data);
 
 
-t_exe       *ms_init(char *input, int *exit_status);
+t_exe       *ms_init(char *input, t_data *g_data);
+char	    *find_path(char *cmd, t_data *g_data);
+int     	check_cmd(char *cmd);
 
 void        ms_exit(t_error err);
 

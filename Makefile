@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+         #
+#    By: smallem <smallem@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/01 12:11:58 by ykerdel           #+#    #+#              #
-#    Updated: 2023/07/15 20:36:32 by ykerdel          ###   ########.fr        #
+#    Updated: 2023/07/17 17:53:07 by smallem          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -75,6 +75,6 @@ test: build $(OBJ)
 
 valgrind :
 	@valgrind --leak-check=full --show-leak-kinds=all \
-	--track-origins=yes --error-limit=no --tool=memcheck -s $(NAME_TEST)
+	--track-origins=yes --error-limit=no --tool=memcheck -s $(NAME)
 
 .PHONY: all install clean fclean re

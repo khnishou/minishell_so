@@ -3,81 +3,72 @@
 /*                                                        :::      ::::::::   */
 /*   split.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: smallem <smallem@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/15 20:01:21 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/07/17 16:51:11 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/07/22 18:30:56 by smallem          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static size_t	quote_skip(char *str, size_t i)
+size_t split_size(char *str)
 {
-	size_t	quote_count;
+	int	i;
+	int	size;
 
-	quote_count = 0;
-	while (str[i] && str[i] != TK_SPACE && !(quote_count % 2))
-		{
-			if (str[i] == TK_D_QUOTE || str[i] == TK_S_QUOTE)
-				quote_count++;
-			else
-				i++;
-		}
-	return (i);
-}
-
-size_t	split_size(char *str)
-{
-	size_t	i;
-	size_t	size;
-
-	i = 0;
+	i = 0; 
 	size = 0;
-	if (str[i] && str[i] == TK_PIPE)
-		i++;
-	while (str[i] && str[i] != TK_PIPE)
+	while (str[i])
 	{
-		while (str[i] && str[i] == TK_SPACE)
-			i++;
-		i = quote_skip(str, i);
-		size++;
-		i++;
+		if (str[i] == TK_PIPE)
+			size++;
 	}
-	return (size);
+	return (size + 1);
 }
 
-char	**ms_split(char **str, size_t size)
+char	*parse_str(char *str)
 {
 	size_t	i;
-	size_t	i_tab;
-	size_t	start;
-	char	**cmd;
 
-	cmd = (char **)malloc(sizeof(char) * (size + 1));
-	if (!cmd)
-		return (NULL);
-	i = 0;
-	i_tab = 0;
-	if ((*str)[i] && (*str)[i] == TK_PIPE)
-		i++;
-	while ((*str)[i] && (*str)[i] != TK_PIPE)
+	i = -1;
+	while (str[++i])
 	{
-		while ((*str)[i] && (*str)[i] == TK_SPACE)
-			i++;
-		start = i;
-		i = quote_skip((*str), i);
-		cmd[i_tab] = ft_substr((*str), start, i - start);
-		printf("cmd[i]%s\n", cmd[i_tab]);
-		//printf("cmd[%zu] = %s\n", i_tab, cmd[i_tab]);
-		i_tab++;
-		//i++;
+		if (str[i] == TK_SPACE)
+			str[i] = '\t';
 	}
-	cmd[i_tab] = NULL;
-	// int	l = 0;
-	// while (l < (int)size)
-	// 	printf("%s\n", cmd[l++]);
-		
-	(*str) = ms_swapstr((*str), NULL, 0, i + 1);
+	i = -1;
+	while (str[++i])
+	{
+		if (str[i] == TK_S_QUOTE || str[i] == TK_D_QUOTE)
+		{
+			i++;
+			while (str[i] != TK_S_QUOTE && str[i] != TK_D_QUOTE)
+			{
+				if (str[i] == '\t')
+					str[i] = TK_SPACE;
+				i++;
+			}
+		}
+	}
+	return (str);
+}
+
+char	**ms_split(char **str)
+{
+	size_t	i;
+	char	**cmd;
+	char	*str1;
+	char	*tmp;
+
+	i = 0;
+	while ((*str)[i] && (*str)[i] != TK_PIPE)
+		i++;
+	tmp = ft_substr((*str), 0, i);
+	str1 = parse_str(tmp);
+	cmd = ft_split(str1, '\t');
+	if ((*str)[i] == TK_PIPE)
+		i++;
+    *str = ms_swapstr(*str, NULL, 0, i + 1);
 	return (cmd);
 }

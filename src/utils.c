@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: smallem <smallem@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 19:30:46 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/07/16 23:08:50 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/07/22 17:33:59 by smallem          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,8 @@ int ms_open(char **str, char token)
     size_t i;
 
     i = 0;
-    fd = -1;
-    while ((*str)[i])
+    fd = 0;
+    while ((*str)[i] && (*str)[i] != TK_PIPE)
     {
         if ((*str)[i] == token)
         {
