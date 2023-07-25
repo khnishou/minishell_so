@@ -6,7 +6,7 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/29 13:26:17 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/04/30 14:01:09 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/07/24 19:22:59 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int				ft_strncmp(const char *s1, const char *s2, size_t size);
 char			*ft_strnstr(const char	*str, const char *to_find, size_t len);
 unsigned int	ft_strlcpy(char *dest, const char *src, unsigned int size);
 unsigned int	ft_strlcat(char *dest, const char *src, unsigned int size);
-char			*ft_strjoin(char const *s1, char const *s2);
+char			*ft_strjoin(char *s1, char *s2);
 char			*ft_strtrim(char const *s, char const *set);
 char			*ft_strdup(const char *s);
 char			*ft_substr(char const *s, unsigned int start, size_t len);

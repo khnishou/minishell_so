@@ -6,7 +6,7 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:45:33 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/07/16 22:18:21 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/07/24 21:46:18 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ int	ft_strncmp(const char *s1, const char *s2, size_t size)
 	size_t	i;
 
 	i = 0;
+	if (!s1 || !s2)
+		return (1);
 	while (s1[i] != '\0' && s2[i] != '\0' && i < size)
 	{
 		if (s1[i] != s2[i])

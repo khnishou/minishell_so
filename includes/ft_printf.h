@@ -1,36 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
+/*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/29 13:41:49 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/07/24 17:37:20 by ykerdel          ###   ########.fr       */
+/*   Created: 2023/04/13 14:42:25 by schibane          #+#    #+#             */
+/*   Updated: 2023/07/24 20:46:05 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/libft.h"
+#ifndef FT_PRINTF_H
+# define FT_PRINTF_H
 
-unsigned int	ft_strlcpy(char *dest, const char *src, unsigned int size)
-{
-	unsigned int	i;
-	unsigned int	lsrc;
+#include "./libft.h"
+# include<stdarg.h>
 
-	lsrc = 0;
-	if (!src)
-		return (0);
-	while (src[lsrc] != '\0')
-		lsrc++;
-	if (size > 0)
-	{
-		i = 0;
-		while (i < size - 1 && src[i] != '\0')
-		{
-			dest[i] = src[i];
-			i++;
-		}
-		dest[i] = '\0';
-	}
-	return (lsrc);
-}
+int		ft_printf(const char *str, ...);
+void	ft_putchar_count(char c, int *ret);
+void	ft_putstr_count(char *str, int *ret);
+void	ft_puthex_adress_count(unsigned long long nbr, int cap,
+			int adr, int *ret);
+void	ft_putnbr_count(int n, int *ret);
+#endif

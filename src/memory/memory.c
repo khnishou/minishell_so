@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   memory.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smallem <smallem@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/22 13:20:04 by kmohamed          #+#    #+#             */
-/*   Updated: 2023/07/22 18:04:36 by smallem          ###   ########.fr       */
+/*   Updated: 2023/07/23 23:42:12 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/memory.h"
+#include "../../includes/memory.h"
 
 void	*add_mem_block(void **p_head, size_t size)
 {

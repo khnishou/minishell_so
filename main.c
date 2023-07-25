@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smallem <smallem@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 17:01:25 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/07/22 18:21:47 by smallem          ###   ########.fr       */
+/*   Updated: 2023/07/25 16:08:45 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,27 +25,29 @@ static void    shell_loop(char **envp)
 {
 	char	*input;
 	t_exe	*exe;
-
 	while (true)
 	{
-		printf(MAGENTA);
+		ft_printf(MAGENTA);
 		if (!isatty(fileno(stdin)))
+		{
+        	ft_printf("➜  ");
 			input = ft_strtrim(get_next_line(fileno(stdin)), " \t");
+		}
 		else
 			input = ft_strtrim(readline("➜  "), " \t");
-		printf(RESET);
-		if (!input || !ft_strtrim(input," ")[0])
-			printf(BLUE"Please feed me :/\n"RESET);
-		else
+		if (input && ft_strtrim(input," ")[0])
+		{
 			add_history(input);
-		init_g(&g_data, envp, input);
-		exe = ms_init(input, &g_data);
-		if (!exe)
-			ms_exit(QLAWI_ERR);
-		launch(exe, &g_data);
-		//////////////////////////////
-		// ms_free();
+			init_g(&g_data, envp, input);
+			
+			exe = ms_init(input, &g_data);
+			if (!exe)
+				ms_exit(QLAWI_ERR);
+			launch(exe, &g_data);
+			// ms_free();
+		}
 	}
+	ft_printf(RESET);
 }
 
 int main(int argc, char *argv[], char *envp[])
