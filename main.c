@@ -6,7 +6,7 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 17:01:25 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/07/25 16:08:45 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/07/26 18:39:14 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,10 @@ static void    shell_loop(char **envp)
 		{
 			add_history(input);
 			init_g(&g_data, envp, input);
-			
 			exe = ms_init(input, &g_data);
-			if (!exe)
-				ms_exit(QLAWI_ERR);
-			launch(exe, &g_data);
+			// if (!exe)
+			// 	ms_exit(QLAWI_ERR);
+			// launch(exe, &g_data);
 			// ms_free();
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 18:54:56 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/07/25 16:03:47 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/07/27 16:46:02 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,14 @@ int single_redirect(char **str, int index, int fd, char token)
     return (fd);
 }
 
-int append_handler(char **str, int index, int fd)
+int append_handler(char **str, int index)
 {
 	size_t  start;
     size_t  i;
+    int fd;
     
     i = index;
-    i += 2; 
-    if (fd > 0)
-        close(fd);
+    i += 2;
     while ((*str)[i] && (*str)[i] == TK_SPACE)
         i++;
     if ((*str)[i] == TK_PIPE)
@@ -61,9 +60,10 @@ int append_handler(char **str, int index, int fd)
     return (fd);
 }
 
-int double_redirect(char **str, size_t index, int fd, char token)
+int double_redirect(char **str, size_t index, char token, int *g_exit_status)
 {
     int i;
+    int fd;
     
     i = index + 2;
     while ((*str)[i] && (*str)[i] == TK_SPACE)
@@ -71,13 +71,13 @@ int double_redirect(char **str, size_t index, int fd, char token)
     if ((*str)[i] == TK_PIPE)
         return (-2);
     if (token == TK_GREATER)
-        fd = append_handler(str, index, fd);
+        fd = append_handler(str, index);
     else if (token == TK_LESS)
-        fd = heredoc_handler(str, index, fd);
+        fd = heredoc_handler(str, index, g_exit_status);
     return (fd);
 }
 
-int ms_open(char **str, char token)
+int ms_open(char **str, char token, int *g_exit_status)
 {
     int fd;
     int i;
@@ -89,7 +89,11 @@ int ms_open(char **str, char token)
         if ((*str)[i] == token)
         {
             if ((*str)[i + 1] && (*str)[i + 1] == token)
-                fd = double_redirect(str, i, fd, token);
+            {
+                if (fd > 0)
+                    close(fd);
+                fd = double_redirect(str, i, token, g_exit_status);
+            }
             else
                 fd = single_redirect(str, i, fd, token);
         }

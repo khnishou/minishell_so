@@ -52,6 +52,5 @@ The readline() function can cause memory leaks. You don’t have to fix them. Bu
 
 
 ## TODO
-size_t	split_size(char *str)
-account for words that dont start with a quote
+
 

@@ -6,7 +6,7 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 12:02:20 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/07/24 20:45:48 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/07/27 16:46:42 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ typedef struct  s_data
 
 char	    *ms_swapstr(char *src, char *swap, size_t start, size_t len);
 char        *quote_str_get(char *str, size_t tk_count);
-int         ms_open(char **str, char token);
+int         ms_open(char **str, char token, int *g_exit_status);
 size_t      ms_count_char(char *input, char c);
 int         ms_quote_skip(char *str, size_t i, char token);
 
@@ -103,6 +103,7 @@ void        ms_exit(t_error err);
 int	    check_cmd(char *cmd);
 char	*find_path(char *cmd, t_data *g_data);
 void	launch(t_exe *exe, t_data *g_data);
-int heredoc_handler(char **str, int index, int fd);
+int heredoc_handler(char **str, int index, int *g_exit_status);
+int    expend_dollar(char **str, int i, int *g_exit_status);
 
 #endif

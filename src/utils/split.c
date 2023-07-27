@@ -6,26 +6,11 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/15 20:01:21 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/07/23 23:41:40 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/07/27 16:54:45 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-size_t split_size(char *str)
-{
-	int	i;
-	int	size;
-
-	i = 0; 
-	size = 0;
-	while (str[i])
-	{
-		if (str[i] == TK_PIPE)
-			size++;
-	}
-	return (size + 1);
-}
 
 char	*parse_str(char *str)
 {
@@ -69,6 +54,6 @@ char	**ms_split(char **str)
 	cmd = ft_split(str1, '\t');
 	if ((*str)[i] == TK_PIPE)
 		i++;
-    *str = ms_swapstr(*str, NULL, 0, i + 1);
+    *str = ms_swapstr(*str, NULL, 0, i);
 	return (cmd);
 }

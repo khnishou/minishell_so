@@ -13,7 +13,22 @@
 
 #include "../../includes/minishell.h"
 
-static int open_heredoc(char *exit)
+char *heredoc_expention(char *str, int *g_exit_status)
+{
+    int i;
+
+    i = 0;
+    while (str[i])
+    {
+        if (str[i] == TK_DOLLAR)
+            i = expend_dollar(&str, i, g_exit_status);
+        else
+            i++;
+    }
+    return (str);
+}
+
+static int open_heredoc(char *str, char *exit, int tk_count, int *g_exit_status)
 {
     int     fd;
     char    *join;
@@ -24,6 +39,8 @@ static int open_heredoc(char *exit)
     ft_printf(GREEN);
     while (ft_strncmp(line, ft_strjoin(exit, "\n"), ft_strlen(exit) + 1))
     {
+        if (!tk_count && line)
+            line = heredoc_expention(line, g_exit_status);
         join = ft_strjoin(join, line);
         ft_printf("heredoc>  ");
         line = get_next_line(1);
@@ -38,7 +55,7 @@ static int open_heredoc(char *exit)
     return (fd);
 }
 
-int heredoc_handler(char **str, int index, int fd)
+int heredoc_handler(char **str, int index, int *g_exit_status)
 {
 	int  start;
     int  i;
@@ -46,8 +63,6 @@ int heredoc_handler(char **str, int index, int fd)
     char    *exit;
     
     i = index + 2;
-    if (fd > 0)
-        close(fd);
     while ((*str)[i] && (*str)[i] == TK_SPACE)
         i++;
     start = i;
@@ -63,6 +78,6 @@ int heredoc_handler(char **str, int index, int fd)
     }
     exit = quote_str_get(ft_substr((*str), start, i - start), tk_count);
     *str = ms_swapstr(*str, NULL, index, i - index);
-    fd = open_heredoc(exit);
-    return (fd);
+    i = open_heredoc((*str), exit, tk_count, g_exit_status);
+    return (i);
 }
