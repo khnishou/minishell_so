@@ -6,7 +6,7 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 12:02:20 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/07/30 17:00:51 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/08/01 20:37:30 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ typedef struct s_exe
     int                 fd_in;
     int                 fd_out;
 	int		            pipe[2];
-    pid_t               pid;
+    // pid_t               pid;
     
 }	t_exe;
 
