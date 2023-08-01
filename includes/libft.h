@@ -6,7 +6,7 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/29 13:26:17 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/07/24 19:22:59 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/07/30 17:01:32 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdint.h>
 # include <unistd.h>
 # include <limits.h>
+# include "./ft_malloc.h"
 
 typedef struct s_list
 {
@@ -67,5 +68,7 @@ int				ft_tolower(int str);
 int				ft_toupper(int str);
 char			*ft_itoa(int n);
 long int		ft_atoi(const char *str);
+
+char			*ft_delsep(char *str);
 
 #endif

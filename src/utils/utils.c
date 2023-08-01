@@ -6,7 +6,7 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 19:30:46 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/07/25 01:46:45 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/07/29 15:55:00 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,4 +93,27 @@ char    *quote_str_get(char *str, size_t tk_count)
     }
     res[j] = 0;
     return (res);
+}
+
+char    *ms_trimstr(char *str)
+{
+    // int i;
+    // int wc;
+
+    // i = -1;
+    // wc = 0;
+    // while (str[++i])
+    // {
+    //     if (str[i] != ' ' && str[i] != '\n' && str[i] != '\t')
+    //         wc++;
+    //     while (str[i] && (str[i] == ' ' || str[i] == '\n' || str[i] == '\t'))
+    //         i++;
+    //     if (str[i] && (str[i] != ' ' && str[i] != '\n' && str[i] != '\t') &&
+    //         (str[i - 1] == ' ' || str[i - 1] == '\n' || str[i - 1] == '\t'))
+    //     {
+    //         i++;
+    //         wc++;
+    //     }
+    // }
+    return (str);
 }

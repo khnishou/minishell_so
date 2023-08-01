@@ -6,96 +6,88 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 18:54:38 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/07/25 19:43:18 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/07/31 20:44:35 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int p[2];
-
-static void	first_proc(t_data *g_data, t_exe *exe)
+static void execute_command(t_data *g_data, t_exe *exe, t_exe *exe_prev)
 {
-	// dup2(exe->fd_in, 0);
-	//dup2(exe->fd_out, 1);
-	// dup2(exe->pipe[1], 1);
-	dup2(p[1], 1);
-	// close(p[0]);
-	// close(p[0]);
-	if (execve(exe->path, exe->cmd, g_data->envp) == -1)
-	{
-		g_data->exit_status = errno;
-		exit(1);
-	}
+    if (exe_prev)
+    {
+        dup2(exe_prev->pipe[0], 0);
+        close(exe_prev->pipe[1]);
+    }
+    if (exe->fd_in)
+    {
+        dup2(exe->fd_in, 0);
+        close(exe->fd_in);
+    }
+    if (exe->fd_out)
+    {
+        dup2(exe->fd_out, 1);
+        close(exe->fd_out);
+    }
+    if (execve(exe->path, exe->cmd, g_data->envp) == -1)
+    {
+        g_data->exit_status = errno;
+        exit(1);
+    }
 }
-
-static void	mid_proc(t_data *g_data, t_exe *exe)
+void launch(t_exe *exe, t_data *g_data)
 {
-	dup2(exe->fd_in, 0);
-	ft_printf("test");
-	dup2((exe - 1)->pipe[0], 0);
-	dup2(exe->fd_out, 1);
-	dup2(exe->pipe[1], 1);
-
-	if (execve(exe->path, exe->cmd, g_data->envp) == -1)
-	{
-		g_data->exit_status = errno;
-		exit(1);
-	}
+    int i;
+    pid_t   pid;
+    pid_t   pids[g_data->nb_pipe + 1];
+    int flag;
+    i = -1;
+    if (g_data->nb_pipe > 0)
+        flag = 1;
+    while (++i <= g_data->nb_pipe)
+    {
+        pid = fork();
+        if (pid == -1)
+        {
+            g_data->exit_status = errno;
+            exit(1);
+        }
+        if (pid == 0)
+        {
+            if (flag)
+            {
+                if (i == 0)
+                {
+                    if (g_data->nb_pipe > 0)
+                    {
+                        dup2(exe[i].pipe[1], 1);
+                        close(exe[i].pipe[0]);
+                    }
+                }
+                else
+                {
+                    dup2(exe[i - 1].pipe[0], 0);
+                    close(exe[i - 1].pipe[1]);
+                    if (i < g_data->nb_pipe)
+                    {
+                        dup2(exe[i].pipe[1], 1);
+                        close(exe[i].pipe[0]);
+                    }
+                }
+            }
+            execute_command(g_data, &exe[i], (i > 0) ? &exe[i - 1] : NULL);
+        }
+        else
+        {
+            pids[i]= pid;
+            if (i > 0)
+            {
+                close(exe[i - 1].pipe[0]);
+                close(exe[i - 1].pipe[1]);
+            }
+        }
+    }
+    i = -1;
+    while (++i <= g_data->nb_pipe)
+        waitpid(pids[i], NULL, 0);
 }
-
-static void	last_proc(t_data *g_data, t_exe *exe)
-{
-	// dup2((exe - 1)->pipe[0], 0);
-	dup2(p[0], 0);
-	//dup2(exe->fd_out, 1);
-	// close(p[1]);
-
-	//dup2(exe->fd_in, 0);
-	//dup2(exe->fd_out, 1);
-	if (execve(exe->path, exe->cmd, g_data->envp) == -1)
-	{
-		// perror("zok");
-		g_data->exit_status = errno;
-		exit(1);
-	}
-}
-
-void	launch(t_exe *exe, t_data *g_data)
-{
-	int	i;
-	int	status;
-
-
-	pipe(p);
-
-	i = -1;
-	while (++i <= g_data->nb_pipe)
-	{
-		exe[i].pid = fork();
-		if (exe[i].pid == -1)
-		{
-			g_data->exit_status = errno;
-			// to handle 
-		}
-		if (i == 0 && exe[i].pid == 0)
-			first_proc(g_data, exe + i);
-		else if (i == g_data->nb_pipe && exe[i].pid == 0)
-		{
-			dprintf(2, "i m khnishoooo \n");
-			last_proc(g_data, exe + i);
-		}
-		else if (exe[i].pid == 0)
-			mid_proc(g_data, exe + i);
-		else
-		{
-			// dup2(p[1], 1);
-			dprintf(2, "before the waot %d\n", exe[i].pid);
-			// waitpid(exe[i].pid, &status, 0);
-				dprintf(2, "under wait\n");
-				sleep(1);
-		}
-	}
-	dprintf(2, "outside of looop\n");
-}
-	

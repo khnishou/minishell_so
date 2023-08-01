@@ -6,7 +6,7 @@
 #    By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/01 12:11:58 by ykerdel           #+#    #+#              #
-#    Updated: 2023/07/25 18:06:20 by ykerdel          ###   ########.fr        #
+#    Updated: 2023/07/30 17:16:37 by ykerdel          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,8 @@ FT_PRINTF_PATH	=		libs/ft_printf
 FT_PRINTF_LIB	=		libs/ft_printf.a
 GNL_PATH		=		libs/get_next_line
 GNL_LIB			=		libs/get_next_line.a
+FT_MALLOC_PATH	=		libs/ft_malloc
+FT_MALLOC_LIB	=		libs/ft_malloc.a
 SRC				=		$(wildcard src/*/*.c) $(wildcard src/*.c)
 SRC_MAIN		=		main.c	$(SRC)
 SRC_TEST		=		test.c	$(SRC)
@@ -34,13 +36,14 @@ RESET = \033[0m
 
 $(NAME) : build $(OBJ)
 	@echo "----- Compiling Minishell -----"
-	${CC} ${SRC_MAIN} -o ${NAME}  ${LIBFT_LIB} ${GNL_LIB} ${FT_PRINTF_LIB} ${CFLAGS} -lreadline
+	${CC} ${SRC_MAIN} -o ${NAME}  ${LIBFT_LIB} ${GNL_LIB} ${FT_PRINTF_LIB} ${FT_MALLOC_LIB} ${CFLAGS} -lreadline
 	clear
 	@echo "$(RED)╔═══════════════════════════════════════════════════════════════════════════════╗$(RESET)"
 	@echo "$(RED)║$(GREEN)                              Minishell Compiled!                              $(RED)║$(RESET)"
 	@echo "$(RED)╚═══════════════════════════════════════════════════════════════════════════════╝$(RESET)"
 
 build: $(LIBFT_PATH)
+	@make -C $(FT_MALLOC_PATH)
 	@make -C $(LIBFT_PATH)
 	@make -C $(GNL_PATH)
 	@make -C $(FT_PRINTF_PATH)
@@ -55,6 +58,7 @@ clean:
 	@make -C $(LIBFT_PATH) clean
 	@make -C $(GNL_PATH) clean
 	@make -C $(FT_PRINTF_PATH) clean
+	@make -C $(FT_MALLOC_PATH) clean
 	rm -rf $(OBJ_DIR)
 	clear
 
@@ -62,6 +66,7 @@ fclean: clean
 	@make -C $(LIBFT_PATH) fclean
 	@make -C $(GNL_PATH) fclean
 	@make -C $(FT_PRINTF_PATH) fclean
+	@make -C $(FT_MALLOC_PATH) fclean
 	rm -f ${NAME}
 	rm -f ${NAME_TEST}
 	clear

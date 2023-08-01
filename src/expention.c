@@ -6,7 +6,7 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 16:33:25 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/07/25 15:41:14 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/07/30 17:12:56 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int    expend_heredoc(char *str, int i)
     return (i);
 }
 
-int    expend_dollar(char **str, int i, int *g_exit_status)
+int    expend_dollar(char **str, int i, int *g_exit_status, bool flag)
 {
     int    len;
     int    env_len;
@@ -52,6 +52,8 @@ int    expend_dollar(char **str, int i, int *g_exit_status)
         env = getenv(ft_substr((*str), i + 1, len - 1));
     if (!env)
         env = NULL;
+    if (flag)
+        env = ft_delsep(env);
     (*str) = ms_swapstr((*str), env, i, len);
     env_len = ft_strlen(env);
     return (i + env_len - 1);
@@ -67,7 +69,7 @@ int expend_quote(char **str, int i, char token, int *g_exit_status)
     {
         flag = 0;
         if (token == TK_D_QUOTE && (*str)[i] == TK_DOLLAR)
-            i = expend_dollar(str, i, g_exit_status);
+            i = expend_dollar(str, i, g_exit_status, false);
         i++;
     }
     if (!(*str)[i])
@@ -90,7 +92,7 @@ char	*ms_expention(char *input, int *g_exit_status)
             else if (input[i] == TK_S_QUOTE || input[i] == TK_D_QUOTE)
                 i = expend_quote(&input, i, input[i], g_exit_status);
             else if (input[i] == TK_DOLLAR)
-                i = expend_dollar(&input, i, g_exit_status);
+                i = expend_dollar(&input, i, g_exit_status, true);
             else
                 i++;
             if (i == -1)

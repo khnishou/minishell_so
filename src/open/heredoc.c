@@ -21,7 +21,7 @@ char *heredoc_expention(char *str, int *g_exit_status)
     while (str[i])
     {
         if (str[i] == TK_DOLLAR)
-            i = expend_dollar(&str, i, g_exit_status);
+            i = expend_dollar(&str, i, g_exit_status, false);
         else
             i++;
     }

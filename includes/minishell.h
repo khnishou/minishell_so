@@ -6,7 +6,7 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 12:02:20 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/07/27 16:46:42 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/07/30 17:00:51 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "./libft.h"
 #include "./ft_printf.h"
 #include "./get_next_line.h"
+#include "./ft_malloc.h"
 #include <stdio.h>
 #include <fcntl.h>
 #include <stdlib.h>
@@ -104,6 +105,6 @@ int	    check_cmd(char *cmd);
 char	*find_path(char *cmd, t_data *g_data);
 void	launch(t_exe *exe, t_data *g_data);
 int heredoc_handler(char **str, int index, int *g_exit_status);
-int    expend_dollar(char **str, int i, int *g_exit_status);
+int    expend_dollar(char **str, int i, int *g_exit_status, bool flag);
 
 #endif

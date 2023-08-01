@@ -6,7 +6,7 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 18:52:38 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/07/27 17:00:14 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/07/28 17:31:33 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,12 @@ t_exe *ms_init(char *input, t_data *g_data)
 		exe[i].fd_in = ms_open(&input, TK_LESS, &g_data->exit_status);
 		exe[i].fd_out = ms_open(&input, TK_GREATER, &g_data->exit_status);
 		exe[i].cmd = ms_split(&input);
-		// if (pipe(exe[i].pipe) == -1)
-		// 	return (NULL);
-		// if (!check_cmd(exe[i].cmd[0]))
-		// 	exe[i].path = find_path(exe[i].cmd[0], g_data);
-		// else
-		// 	exe[i].path = NULL;
+		if (i != (size_t)g_data->nb_pipe)
+            pipe(exe[i].pipe);
+		if (!check_cmd(exe[i].cmd[0]))
+			exe[i].path = find_path(exe[i].cmd[0], g_data);
+		else
+			exe[i].path = NULL;
 		i++;
 	}
 	free(input);
