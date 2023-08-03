@@ -6,7 +6,7 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 18:54:38 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/08/03 03:19:31 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/08/03 05:16:07 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,29 @@ static void execute_command(t_data *g_data, t_exe *exe, t_exe *exe_prev)
         exit(1);
     }
 }
+
+static void    child_process(t_exe *exe, t_data *g_data, int i)
+{
+    int j;
+
+    if (!i)
+        dup2(exe[i].pipe[1], STDOUT_FILENO);
+    else if (i == g_data->nb_pipe)
+        dup2(exe[i - 1].pipe[0], STDIN_FILENO);
+    else
+        dup_in_out(exe[i].pipe, exe[i - 1].pipe);
+    j = -1;
+    while (++j < g_data->nb_pipe)
+        close_pipe(exe[j].pipe);
+    if (i > 0)
+        execute_command(g_data, &exe[i], &exe[i - 1]);
+    else
+        execute_command(g_data, &exe[i], NULL);
+}
+
 void launch(t_exe *exe, t_data *g_data)
 {
     int i;
-    int j;
     pid_t   pids[g_data->nb_pipe + 1];
     
     i = -1;
@@ -52,39 +71,13 @@ void launch(t_exe *exe, t_data *g_data)
         }
         else if (pids[i] == 0)
         {
-            if (i == 0)
-            {
-                if (g_data->nb_pipe > 0)
-                {
-                    dup2(exe[i].pipe[1], 1);
-                    close(exe[i].pipe[0]);
-                    close(exe[i].pipe[1]);
-                }
-            }
+            if (!(g_data->nb_pipe))
+                execute_command(g_data, &exe[i], NULL);
             else
-            {
-                dup2(exe[i - 1].pipe[0], 0);
-                close(exe[i - 1].pipe[0]);
-                if (i < g_data->nb_pipe)
-                {
-                    close(exe[i].pipe[0]);
-                    dup2(exe[i].pipe[1], 1);
-                    close(exe[i].pipe[1]);
-                }
-            }
-            j = i;
-            while (++j < g_data->nb_pipe)
-            {
-                close(exe[j].pipe[0]);
-                close(exe[j].pipe[1]);
-            }
-            execute_command(g_data, &exe[i], (i > 0) ? &exe[i - 1] : NULL);
+                child_process(exe, g_data, i);
         }
         else if (i > 0)
-        {
-            close(exe[i - 1].pipe[0]);
-            close(exe[i - 1].pipe[1]);
-        }
+            close_pipe(exe[i - 1].pipe);
     }
     i = -1;
     while (++i <= g_data->nb_pipe)

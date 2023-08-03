@@ -6,11 +6,11 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 19:30:46 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/07/29 15:55:00 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/08/03 05:22:41 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h" 
+#include "../../../includes/minishell.h"
 
 size_t    ms_count_char(char *input, char c)
 {

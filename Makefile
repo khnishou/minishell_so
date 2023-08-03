@@ -6,7 +6,7 @@
 #    By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/01 12:11:58 by ykerdel           #+#    #+#              #
-#    Updated: 2023/07/30 17:16:37 by ykerdel          ###   ########.fr        #
+#    Updated: 2023/08/03 05:21:08 by ykerdel          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ GNL_PATH		=		libs/get_next_line
 GNL_LIB			=		libs/get_next_line.a
 FT_MALLOC_PATH	=		libs/ft_malloc
 FT_MALLOC_LIB	=		libs/ft_malloc.a
-SRC				=		$(wildcard src/*/*.c) $(wildcard src/*.c)
+SRC				=		$(wildcard src/*/*/*.c) $(wildcard src/*/*.c) $(wildcard src/*.c)
 SRC_MAIN		=		main.c	$(SRC)
 SRC_TEST		=		test.c	$(SRC)
 OBJ				=		$(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))

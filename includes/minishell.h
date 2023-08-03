@@ -6,7 +6,7 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 12:02:20 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/08/01 20:37:30 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/08/03 05:17:44 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,6 @@ void	launch(t_exe *exe, t_data *g_data);
 
 
 t_exe       *ms_init(char *input, t_data *g_data);
-char	    *find_path(char *cmd, t_data *g_data);
-int     	check_cmd(char *cmd);
 
 void        ms_exit(t_error err);
 
@@ -106,5 +104,10 @@ char	*find_path(char *cmd, t_data *g_data);
 void	launch(t_exe *exe, t_data *g_data);
 int heredoc_handler(char **str, int index, int *g_exit_status);
 int    expend_dollar(char **str, int i, int *g_exit_status, bool flag);
+
+char	    *find_path(char *cmd, t_data *g_data);
+int     	check_cmd(char *cmd);
+void    close_pipe(int *fd);
+void    dup_in_out(int *fd, int *fd_prev);
 
 #endif

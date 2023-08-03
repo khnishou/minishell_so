@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils2.c                                           :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/22 15:18:41 by smallem           #+#    #+#             */
-/*   Updated: 2023/07/23 23:41:56 by ykerdel          ###   ########.fr       */
+/*   Created: 2023/08/03 05:12:39 by ykerdel           #+#    #+#             */
+/*   Updated: 2023/08/03 05:18:14 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,3 +65,14 @@ char	*find_path(char *cmd, t_data *g_data)
 	return (NULL);
 }
 
+void    close_pipe(int *fd)
+{
+    close(fd[STDIN_FILENO]);
+    close(fd[STDOUT_FILENO]);
+}
+
+void    dup_in_out(int *fd, int *fd_prev)
+{
+    dup2(fd_prev[0], STDIN_FILENO);
+    dup2(fd[1], STDOUT_FILENO);
+}
