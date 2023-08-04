@@ -6,7 +6,7 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 17:06:07 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/07/30 17:06:17 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/08/04 21:54:37 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_memlist	*lst_new(void *ptr, size_t size)
 	return (tmp);
 }
 
-void	ft_add2lst(t_memlist **lst, t_memlist *node)
+void	ft_addlst(t_memlist **lst, t_memlist *node)
 {
 	t_memlist	*tmp;
 
@@ -47,7 +47,7 @@ void	*ft_malloc(t_memlist **lst, size_t size)
 	ptr = malloc(size);
 	if (ptr == NULL)
 		return (NULL);
-	ft_add2lst(lst, lst_new(ptr, size));
+	ft_addlst(lst, lst_new(ptr, size));
 	return (ptr);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/29 03:57:01 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/07/30 17:05:46 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/08/04 22:17:54 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static size_t ft_char_count(char *str)
 char *compact_space(int i, int j, int is_previous_separator, char *str)
 {
     size_t len = ft_char_count(str);
-    char *result = (char *)malloc(sizeof(char) * (len + 1));
+    char *result = (char *)ft_malloc(&(g_data.mem_list), sizeof(char) * (len + 1));
     if (result == NULL)
         return NULL;
 

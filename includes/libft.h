@@ -6,7 +6,7 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/29 13:26:17 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/07/30 17:01:32 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/08/04 22:15:11 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdint.h>
 # include <unistd.h>
 # include <limits.h>
+#include "./minishell.h"
 # include "./ft_malloc.h"
 
 typedef struct s_list

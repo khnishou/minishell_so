@@ -6,7 +6,7 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 19:10:16 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/07/12 23:49:40 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/08/04 22:18:26 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 	len = ft_strlen(s);
 	if (!s)
 		return (0);
-	d = malloc(len + 1);
+	d = ft_malloc(&(g_data.mem_list), len + 1);
 	if (!d)
 		return (0);
 	i = 0;

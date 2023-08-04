@@ -6,7 +6,7 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:10:51 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/07/24 19:19:58 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/08/04 22:18:24 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char *ft_strjoin(char *s1, char *s2)
 	size_t j;
 	char *join;
 
-	join = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
+	join = ft_malloc(&(g_data.mem_list), sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
 	if (!join)
 		return (NULL);
 	i = 0;

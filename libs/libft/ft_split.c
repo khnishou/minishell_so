@@ -6,7 +6,7 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/25 18:10:31 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/07/26 19:03:46 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/08/04 22:59:48 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,12 @@ static int	ft_copystringsintab(char *str, char c, int tab_len, char **tab)
 		if (*str != c && i < tab_len)
 		{
 			word_len = ft_countwordlen(str, c);
-			tab[i] = (char *) malloc(word_len + 1);
+			tab[i] = (char *) ft_malloc(&(g_data.mem_list), word_len + 1);
 			if (!tab[i])
 			{
 				while (--i >= 0)
-					free(tab[i]);
-				free(tab);
+					// free(tab[i]);
+				// free(tab);
 				return (0);
 			}
 			ft_strlcpy(tab[i], str, word_len + 1);

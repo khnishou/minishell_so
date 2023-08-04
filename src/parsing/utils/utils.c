@@ -6,7 +6,7 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 19:30:46 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/08/03 05:22:41 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/08/04 22:18:29 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	*ms_swapstr(char *src, char *swap, size_t start, size_t len)
     if (!src || start >= src_len)
         return (NULL);
     end = start + len;
-    res = malloc(src_len - len + ft_strlen(swap) + 1);
+    res = ft_malloc(&(g_data.mem_list), src_len - len + ft_strlen(swap) + 1);
     if (!res)
         return (NULL);
     i = -1;
@@ -73,7 +73,7 @@ char    *quote_str_get(char *str, size_t tk_count)
     char    token;
     char    *res;
 
-    res = malloc(sizeof(char) * (ft_strlen(str) - tk_count + 1));
+    res = ft_malloc(&(g_data.mem_list), sizeof(char) * (ft_strlen(str) - tk_count + 1));
     if (!res)
         return (NULL);
     token = 0;
@@ -95,25 +95,18 @@ char    *quote_str_get(char *str, size_t tk_count)
     return (res);
 }
 
-char    *ms_trimstr(char *str)
+char    *ms_getenv(char *str)
 {
-    // int i;
-    // int wc;
+    size_t  len;
+    char    **env;
 
-    // i = -1;
-    // wc = 0;
-    // while (str[++i])
-    // {
-    //     if (str[i] != ' ' && str[i] != '\n' && str[i] != '\t')
-    //         wc++;
-    //     while (str[i] && (str[i] == ' ' || str[i] == '\n' || str[i] == '\t'))
-    //         i++;
-    //     if (str[i] && (str[i] != ' ' && str[i] != '\n' && str[i] != '\t') &&
-    //         (str[i - 1] == ' ' || str[i - 1] == '\n' || str[i - 1] == '\t'))
-    //     {
-    //         i++;
-    //         wc++;
-    //     }
-    // }
-    return (str);
+    env = g_data.envp;
+    len = ft_strlen(str);
+    while (*env)
+    {
+        if (!ft_strncmp(str, *env, len))
+            return (*env + len + 1);
+        env++;
+    }
+    return (NULL);
 }

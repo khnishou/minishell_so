@@ -6,25 +6,25 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 05:12:39 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/08/03 05:18:14 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/08/04 21:45:00 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static char **path_find(char *envp[])
+static char **path_find(void)
 {
     int     i;
     char    **ch;
 
     i = 0;
-    while (envp[i])
+    while (g_data.envp[i])
     {
-        if (ft_strncmp("PATH=", envp[i], 5) == 0)
+        if (ft_strncmp("PATH=", g_data.envp[i], 5) == 0)
             break ;
         i++;
     }
-    ch = ft_split(envp[i] + 5, ':');
+    ch = ft_split(g_data.envp[i] + 5, ':');
     return (ch);
 }
 
@@ -42,14 +42,14 @@ int	check_cmd(char *cmd)
 		return (0);
 }
 
-char	*find_path(char *cmd, t_data *g_data)
+char	*find_path(char *cmd)
 {
 	char	**p_path;
 	char	*tmp;
 	char	*tmp_f;
 	int		i;
 
-	p_path = path_find(g_data->envp);
+	p_path = path_find();
 	i = -1;
 	while (p_path[++i])
 	{

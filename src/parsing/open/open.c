@@ -6,7 +6,7 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 18:54:56 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/08/03 05:22:27 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/08/04 21:35:37 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,14 +53,14 @@ int append_handler(char **str, int index)
     start = i;
     while ((*str)[i] && (ft_isalnum((*str)[i]) || (*str)[i] == TK_PERIOD || (*str)[i] == TK_HYPHEN || (*str)[i] == TK_UNDERSCORE))
     i++;
-    fd = open(ft_substr(*str, start, i - start), O_RDWR | O_CREAT, 0000644);
+    fd = open(ft_substr(*str, start, i - start), O_RDWR | O_CREAT | O_APPEND, 0000644);
     if (fd == -1)
         perror("Minishell");
     *str = ms_swapstr(*str, NULL, index, i - index);
     return (fd);
 }
 
-int double_redirect(char **str, size_t index, char token, int *g_exit_status)
+int double_redirect(char **str, size_t index, char token)
 {
     int i;
     int fd;
@@ -73,11 +73,11 @@ int double_redirect(char **str, size_t index, char token, int *g_exit_status)
     if (token == TK_GREATER)
         fd = append_handler(str, index);
     else if (token == TK_LESS)
-        fd = heredoc_handler(str, index, g_exit_status);
+        fd = heredoc_handler(str, index);
     return (fd);
 }
 
-int ms_open(char **str, char token, int *g_exit_status)
+int ms_open(char **str, char token)
 {
     int fd;
     int i;
@@ -92,7 +92,7 @@ int ms_open(char **str, char token, int *g_exit_status)
             {
                 if (fd > 0)
                     close(fd);
-                fd = double_redirect(str, i, token, g_exit_status);
+                fd = double_redirect(str, i, token);
             }
             else
                 fd = single_redirect(str, i, fd, token);
