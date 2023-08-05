@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: smallem <smallem@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 12:02:20 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/08/04 22:14:26 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/08/05 16:50:50 by smallem          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,5 +107,13 @@ int     heredoc_handler(char **str, int index);
 int    expend_dollar(char **str, int i, bool flag);
 void    close_pipe(int *fd);
 void    dup_in_out(int *fd, int *fd_prev);
+void	ft_unset(t_exe *exe);
+void	ft_pwd(t_exe *exe);
+void	ft_export(t_exe *exe);
+void	ft_env(t_exe *exe);
+void	ft_echo(t_exe *exe);
+void	ft_cd(t_exe *exe);
+int 	ev_input_check(t_exe *exe);
+char	**copy_envp(char **envp);
 
 #endif

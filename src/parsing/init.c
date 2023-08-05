@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: smallem <smallem@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 18:52:38 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/08/04 23:07:03 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/08/05 17:30:16 by smallem          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,15 @@ t_exe *ms_init(char *input)
 		if (i != (size_t)g_data.nb_pipe)
             pipe(exe[i].pipe);
 		if (!check_cmd(exe[i].cmd[0]))
+		{
+			
 			exe[i].path = find_path(exe[i].cmd[0]);
+		}
 		else
+		{
+			
 			exe[i].path = NULL;
+		}
 		i++;
 	}
 	return(exe);

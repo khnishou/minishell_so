@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: smallem <smallem@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 05:12:39 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/08/04 21:45:00 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/08/05 17:55:24 by smallem          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ static char **path_find(void)
     i = 0;
     while (g_data.envp[i])
     {
-        if (ft_strncmp("PATH=", g_data.envp[i], 5) == 0)
+        if (ft_strncmp("PATH=", g_data.envp[i], ft_strlen("PATH=")) == 0)
             break ;
         i++;
     }
-    ch = ft_split(g_data.envp[i] + 5, ':');
+    ch = ft_split(g_data.envp[i] + ft_strlen("PATH="), ':');
     return (ch);
 }
 
@@ -61,7 +61,7 @@ char	*find_path(char *cmd)
 			return (tmp_f);
 		}
 	}
-	printf("%s: command not found\n", cmd);
+	ft_printf("%s: command not found\n", cmd);
 	return (NULL);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: smallem <smallem@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 17:01:25 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/08/04 23:07:56 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/08/05 18:01:55 by smallem          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,11 @@
 void	init_g(char **envp, char *input)
 {
 	g_data.nb_pipe = ms_count_char(input, TK_PIPE);
-	g_data.exit_status = 0;
-	g_data.envp = envp;
+	if (!g_data.envp)
+	{
+		g_data.envp = copy_envp(envp);
+		g_data.exit_status = 0;
+	}
 }
 
 static void    shell_loop(char **envp)
@@ -42,10 +45,10 @@ static void    shell_loop(char **envp)
 			if (!exe)
 				ms_exit(QLAWI_ERR);
 			launch(exe);
-			free_lst(&(g_data.mem_list));
-			system("leaks minishell");
+			//system("leaks minishell");
 		}
 	}
+	free_lst(&(g_data.mem_list));
 	ft_printf(RESET);
 }
 
