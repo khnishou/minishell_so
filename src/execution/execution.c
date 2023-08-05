@@ -3,14 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: smallem <smallem@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 18:54:38 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/08/03 05:16:07 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/08/05 14:41:43 by smallem          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+static void run_cmd(t_exe *exe, t_data *g_data)
+{
+    if (!ft_strncmp(exe->cmd[0], "cd", ft_strlen("cd")))
+        ft_cd(exe, g_data);    
+    else if (!ft_strncmp(exe->cmd[0], "pwd", ft_strlen("pwd")))
+        ft_pwd(exe, g_data);
+    else if (!ft_strncmp(exe->cmd[0], "export", ft_strlen("export")))
+        ft_export(exe, g_data);
+    else if (!ft_strncmp(exe->cmd[0], "unset", ft_strlen("unset")))
+        ft_unset(exe, g_data);
+    else if (!ft_strncmp(exe->cmd[0], "env", ft_strlen("env")))
+        ft_env(exe, g_data);
+    else if (!ft_strncmp(exe->cmd[0], "echo", ft_strlen("echo")))
+        ft_echo(exe, g_data);
+    // if (!ft_strncmp(exe->cmd[0], "exit", ft_strlen("exit")))
+    //     ft_exit(exe, g_data);
+}
 
 static void execute_command(t_data *g_data, t_exe *exe, t_exe *exe_prev)
 {
@@ -29,7 +47,9 @@ static void execute_command(t_data *g_data, t_exe *exe, t_exe *exe_prev)
         dup2(exe->fd_out, 1);
         close(exe->fd_out);
     }
-    if (execve(exe->path, exe->cmd, g_data->envp) == -1)
+    if (check_cmd(exe->cmd[0]))
+        run_cmd(exe, g_data);
+    else if (execve(exe->path, exe->cmd, g_data->envp) == -1)
     {
         g_data->exit_status = errno;
         exit(1);
@@ -61,25 +81,30 @@ void launch(t_exe *exe, t_data *g_data)
     pid_t   pids[g_data->nb_pipe + 1];
     
     i = -1;
-    while (++i <= g_data->nb_pipe)
+    if (g_data->nb_pipe == 0 && check_cmd(exe[0].cmd[0]))
+        run_cmd(exe, g_data);
+    else
     {
-        pids[i] = fork();
-        if (pids[i] == -1)
+        while (++i <= g_data->nb_pipe)
         {
-            g_data->exit_status = errno;
-            exit(1);
+            pids[i] = fork();
+            if (pids[i] == -1)
+            {
+                g_data->exit_status = errno;
+                exit(1);
+            }
+            else if (pids[i] == 0)
+            {
+                if (!(g_data->nb_pipe))
+                    execute_command(g_data, &exe[i], NULL);
+                else
+                    child_process(exe, g_data, i);
+            }
+            else if (i > 0)
+                close_pipe(exe[i - 1].pipe);
         }
-        else if (pids[i] == 0)
-        {
-            if (!(g_data->nb_pipe))
-                execute_command(g_data, &exe[i], NULL);
-            else
-                child_process(exe, g_data, i);
-        }
-        else if (i > 0)
-            close_pipe(exe[i - 1].pipe);
+        i = -1;
+        while (++i <= g_data->nb_pipe)
+            waitpid(pids[i], NULL, 0);
     }
-    i = -1;
-    while (++i <= g_data->nb_pipe)
-        waitpid(pids[i], NULL, 0);
 }

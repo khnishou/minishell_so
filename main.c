@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: smallem <smallem@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 17:01:25 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/07/29 17:46:30 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/08/05 15:38:08 by smallem          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	init_g(t_data	*g_data, char **envp, char *input)
 {
 	g_data->nb_pipe = ms_count_char(input, TK_PIPE);
 	g_data->exit_status = 0;
-	g_data->envp = envp;
+	g_data->envp = copy_envp(envp);
 }
 
 static void    shell_loop(char **envp)

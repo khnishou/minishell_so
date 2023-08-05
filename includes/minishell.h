@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: smallem <smallem@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 12:02:20 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/08/03 05:17:44 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/08/05 15:36:04 by smallem          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,5 +109,16 @@ char	    *find_path(char *cmd, t_data *g_data);
 int     	check_cmd(char *cmd);
 void    close_pipe(int *fd);
 void    dup_in_out(int *fd, int *fd_prev);
+
+void	ft_export(t_exe *exe, t_data *g_data);
+void	ft_env(t_exe *exe, t_data *g_data);
+void	ft_echo(t_exe *exe, t_data *g_data);
+void	ft_cd(t_exe *exe, t_data *g_data);
+void	ft_pwd(t_exe *exe, t_data *g_data);
+void	ft_unset(t_exe *exe, t_data *g_data);
+
+char	**copy_envp(char **envp);
+int	    ev_input_check(t_exe *exe);
+
 
 #endif
