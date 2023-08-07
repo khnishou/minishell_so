@@ -6,7 +6,7 @@
 /*   By: smallem <smallem@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 05:22:02 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/08/05 15:52:56 by smallem          ###   ########.fr       */
+/*   Updated: 2023/08/07 12:50:21 by smallem          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,21 @@ static int	ft_skip(char *ev_line, char **cmd)
 	return (0);
 }
 
-void	ft_unset(t_exe *exe)
+void	ft_unset(t_exe *exe, int flag)
 {
 	char	**new_ev;
 	int		size;
 	int		i;
 	int		nb_arg;
 
+	if (exe->cmd[1] != NULL)
+	{
+		//error nessages too many args
+		if (flag)
+			exit(1);
+		else
+			return ;
+	}
 	i = -1;
 	while (g_data.envp[++i])
 		;
@@ -43,7 +51,10 @@ void	ft_unset(t_exe *exe)
 	if (new_ev == NULL)
 	{
 		//error
-		return ;
+		if (flag)
+			exit(1);
+		else
+			return ;
 	}
 	i = 0;
 	nb_arg = 0;
@@ -56,4 +67,7 @@ void	ft_unset(t_exe *exe)
 	}
 	new_ev[nb_arg] = NULL;
 	g_data.envp = new_ev;
+	g_data.exit_status = 0;
+	if (flag)
+		exit(0);
 }

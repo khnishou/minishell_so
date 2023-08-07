@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: smallem <smallem@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 18:54:42 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/07/23 23:42:19 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/08/05 18:33:21 by smallem          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ void    ms_exit(t_error err)
     if (err == VALID)
         exit (0);
     if (err == ARGC_ERR)
-        printf(RED"Please don't overflow me\n"RESET);
+        ft_printf(RED"Please don't overflow me\n"RESET);
     if (err == MALLOC_ERR)
-        printf(RED"Malloc fail\n"RESET);
+        ft_printf(RED"Malloc fail\n"RESET);
     exit (1);
 }

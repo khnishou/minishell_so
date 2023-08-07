@@ -6,7 +6,7 @@
 /*   By: smallem <smallem@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 05:21:42 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/08/05 15:55:16 by smallem          ###   ########.fr       */
+/*   Updated: 2023/08/07 12:52:54 by smallem          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static char	**update_envp(char	**envp, char *path)
 			}
 		}
 		else if (!ft_strncmp(envp[size], "OLDPWD=", ft_strlen("OLDPWD=")))
-			new_envp[size] = tmp;
+			new_envp[size] = ft_strjoin("OLD", tmp);
 		else
 		{
 			new_envp[size] = ft_strdup(envp[size]);
@@ -62,7 +62,7 @@ static char	**update_envp(char	**envp, char *path)
 	return (new_envp);
 }
 
-void	ft_cd(t_exe *exe)
+void	ft_cd(t_exe *exe, int flag)
 {
 	char	cwd[1024];
 
@@ -70,6 +70,10 @@ void	ft_cd(t_exe *exe)
 	{
 		// invalid nbr arg error msg
 		g_data.exit_status = 1;
+		if (flag)
+			exit(1);
+		else
+			return ;
 	}
 	if (chdir(exe->cmd[1]) == -1)
 		g_data.exit_status = errno;
@@ -79,7 +83,12 @@ void	ft_cd(t_exe *exe)
 	{
 		// do stuff
 		g_data.exit_status = 1;
-		return ;
+		if (flag)
+			exit(1);
+		else
+			return ;
 	}
 	g_data.exit_status = 0;
+	if (flag)
+		exit(0);
 }

@@ -6,26 +6,26 @@
 /*   By: smallem <smallem@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 18:54:38 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/08/05 17:03:52 by smallem          ###   ########.fr       */
+/*   Updated: 2023/08/07 12:45:02 by smallem          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static void run_cmd(t_exe *exe)
+static void run_cmd(t_exe *exe, int flag)
 {
     if (!ft_strncmp(exe->cmd[0], "cd", ft_strlen("cd")))
-        ft_cd(exe);    
+        ft_cd(exe, flag);    
     else if (!ft_strncmp(exe->cmd[0], "pwd", ft_strlen("pwd")))
-        ft_pwd(exe);
+        ft_pwd(exe, flag);
     else if (!ft_strncmp(exe->cmd[0], "export", ft_strlen("export")))
-        ft_export(exe);
+        ft_export(exe, flag);
     else if (!ft_strncmp(exe->cmd[0], "unset", ft_strlen("unset")))
-        ft_unset(exe);
+        ft_unset(exe, flag);
     else if (!ft_strncmp(exe->cmd[0], "env", ft_strlen("env")))
-        ft_env(exe);
+        ft_env(exe, flag);
     else if (!ft_strncmp(exe->cmd[0], "echo", ft_strlen("echo")))
-        ft_echo(exe);
+        ft_echo(exe, flag);
     // if (!ft_strncmp(exe->cmd[0], "exit", ft_strlen("exit")))
     //     ft_exit(exe, g_data);
 }
@@ -47,7 +47,9 @@ static void execute_command(t_exe *exe, t_exe *exe_prev)
         dup2(exe->fd_out, 1);
         close(exe->fd_out);
     }
-    if (execve(exe->path, exe->cmd, g_data.envp) == -1)
+    if (check_cmd(exe->cmd[0]))
+        run_cmd(exe, 1);
+    else if (execve(exe->path, exe->cmd, g_data.envp) == -1)
     {
         g_data.exit_status = errno;
         exit(1);
@@ -80,7 +82,7 @@ void launch(t_exe *exe)
     
     i = -1;
     if (g_data.nb_pipe == 0 && check_cmd(exe[0].cmd[0]))
-        run_cmd(exe);
+        run_cmd(exe, 0);
     else
     {
         while (++i <= g_data.nb_pipe)

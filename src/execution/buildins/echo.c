@@ -6,13 +6,13 @@
 /*   By: smallem <smallem@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 05:21:49 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/08/05 15:54:38 by smallem          ###   ########.fr       */
+/*   Updated: 2023/08/07 12:51:45 by smallem          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
-void	ft_echo(t_exe *exe)
+void	ft_echo(t_exe *exe, int flag)
 {
 	int	i;
 
@@ -23,6 +23,10 @@ void	ft_echo(t_exe *exe)
 	{
 		// add error message, invalid number of args
 		g_data.exit_status = 1;
+		if (flag)
+			exit(1);
+		else
+			return ;
 	}
 	if (i == 2)
 		ft_printf("%s\n", exe->cmd[1]);
@@ -30,7 +34,9 @@ void	ft_echo(t_exe *exe)
 		ft_printf("%s", exe->cmd[2]);
 	else
 	{
-		// add error message for wrong options
+		// invalid option error msg
 		g_data.exit_status = 1;
 	}
+	if (flag)
+		exit(0);
 }

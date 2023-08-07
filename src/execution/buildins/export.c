@@ -6,14 +6,14 @@
 /*   By: smallem <smallem@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 05:21:58 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/08/05 17:17:41 by smallem          ###   ########.fr       */
+/*   Updated: 2023/08/07 12:51:21 by smallem          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
 
-void	ft_export(t_exe *exe)
+void	ft_export(t_exe *exe, int flag)
 {
 	int		nb_arg;
 	char	**val;
@@ -24,13 +24,16 @@ void	ft_export(t_exe *exe)
 	if (!ev_input_check(exe))
 	{
 		// invalid input format error msg
-		return ;
+		if (flag)
+			exit(1);
+		else
+			return ;
 	}
 	nb_arg = 0;
 	while (exe->cmd[nb_arg])
 		nb_arg++;
 	if (nb_arg - 1 == 0)
-		ft_env(exe);
+		ft_env(exe, 0);
 	else
 	{
 		i = -1;
@@ -40,7 +43,10 @@ void	ft_export(t_exe *exe)
 		new_ev = malloc(sizeof(char *) * (size + 1));
 		if (new_ev == NULL)
 		{
-			//error 
+			ms_exit(MALLOC_ERR); 
+			if (flag)
+			exit(1);
+		else
 			return ;
 		}
 		i = -1;
@@ -56,4 +62,7 @@ void	ft_export(t_exe *exe)
 		new_ev[i] = NULL;
 		g_data.envp = new_ev;
 	}
+	g_data.exit_status = 0;
+	if (flag)
+		exit(0);
 }
