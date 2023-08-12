@@ -6,7 +6,7 @@
 /*   By: smallem <smallem@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 17:01:25 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/08/07 12:27:39 by smallem          ###   ########.fr       */
+/*   Updated: 2023/08/12 16:48:31 by smallem          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,21 @@ static void    shell_loop(char **envp)
 			launch(exe);
 			//system("leaks minishell");
 		}
+		else if (input == NULL)
+			break ;
 	}
-	free_lst(&(g_data.mem_list));
 	ft_printf(RESET);
 }
 
 int main(int argc, char *argv[], char *envp[])
 {
+	struct sigaction	sa;
+
+	init_sig(&sa);
 	(void) argv;
 	if (argc != 1)
 		printf(RED"args will be ignored\n\n"RESET);
 	shell_loop(envp);
+	free_lst(&(g_data.mem_list));
 	return (0);
 }

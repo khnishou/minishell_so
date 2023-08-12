@@ -6,7 +6,7 @@
 /*   By: smallem <smallem@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 12:02:20 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/08/07 12:48:57 by smallem          ###   ########.fr       */
+/*   Updated: 2023/08/12 16:58:46 by smallem          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include <errno.h>
+#include <signal.h>
 
 #define RED     "\x1b[31m"
 #define GREEN   "\x1b[32m"
@@ -66,6 +67,7 @@ typedef struct s_exe
     int                 fd_in;
     int                 fd_out;
 	int		            pipe[2];
+    pid_t                  *pids;
 }	t_exe;
 
 typedef struct  s_data
@@ -115,5 +117,7 @@ void	ft_echo(t_exe *exe, int flag);
 void	ft_cd(t_exe *exe, int flag);
 int 	ev_input_check(t_exe *exe);
 char	**copy_envp(char **envp);
+void	init_sig(struct sigaction *sa);
+void	child_p(void);
 
 #endif

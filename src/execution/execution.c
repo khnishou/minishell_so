@@ -6,7 +6,7 @@
 /*   By: smallem <smallem@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 18:54:38 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/08/07 12:45:02 by smallem          ###   ########.fr       */
+/*   Updated: 2023/08/12 16:58:12 by smallem          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ static void run_cmd(t_exe *exe, int flag)
 
 static void execute_command(t_exe *exe, t_exe *exe_prev)
 {
+    child_p();
     if (exe_prev)
     {
         dup2(exe_prev->pipe[0], 0);
@@ -78,22 +79,23 @@ static void    child_process(t_exe *exe, int i)
 void launch(t_exe *exe)
 {
     int i;
-    pid_t   pids[g_data.nb_pipe + 1];
+    // pid_t   pids[g_data.nb_pipe + 1];
     
     i = -1;
+    exe->pids = malloc(sizeof(pid_t) * (g_data.nb_pipe + 1));
     if (g_data.nb_pipe == 0 && check_cmd(exe[0].cmd[0]))
         run_cmd(exe, 0);
     else
     {
         while (++i <= g_data.nb_pipe)
         {
-            pids[i] = fork();
-            if (pids[i] == -1)
+            exe->pids[i] = fork();
+            if (exe->pids[i] == -1)
             {
                 g_data.exit_status = errno;
                 exit(1);
             }
-            else if (pids[i] == 0)
+            else if (exe->pids[i] == 0)
             {
                 if (!(g_data.nb_pipe))
                     execute_command(&exe[i], NULL);
@@ -105,6 +107,6 @@ void launch(t_exe *exe)
         }
         i = -1;
         while (++i <= g_data.nb_pipe)
-            waitpid(pids[i], NULL, 0);
+            waitpid(exe->pids[i], NULL, 0);
     }
 }
