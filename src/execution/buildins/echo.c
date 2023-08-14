@@ -17,17 +17,18 @@ void	ft_echo(t_exe *exe, int flag)
 	int	i;
 
 	i = -1;
+	ft_printf("%d\n", i);
 	while (exe->cmd[++i])
-		;
-	if (i != 2 && i != 3)
-	{
-		// add error message, invalid number of args
-		g_data.exit_status = 1;
-		if (flag)
-			exit(1);
-		else
-			return ;
-	}
+		ft_printf("%d\n", i);
+	// if (i != 2 && i != 3)
+	// {
+	// 	// add error message, invalid number of args
+	// 	g_data.exit_status = 1;
+	// 	if (flag)
+	// 		exit(1);
+	// 	else
+	// 		return ;
+	// }
 	if (i == 2)
 		ft_printf("%s\n", exe->cmd[1]);
 	else if (!ft_strncmp(exe->cmd[1], "-n", ft_strlen("-n")) && exe->cmd[2])

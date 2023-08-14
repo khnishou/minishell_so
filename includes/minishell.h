@@ -25,6 +25,7 @@
 #include <readline/history.h>
 #include <errno.h>
 #include <signal.h>
+#include <termios.h>
 
 #define RED     "\x1b[31m"
 #define GREEN   "\x1b[32m"
@@ -119,5 +120,7 @@ int 	ev_input_check(t_exe *exe);
 char	**copy_envp(char **envp);
 void	init_sig(struct sigaction *sa);
 void	child_p(void);
+
+int	termios_echoback(bool echo_ctl_chr);
 
 #endif

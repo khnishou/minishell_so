@@ -26,10 +26,11 @@ static void    shell_loop(char **envp)
 {
 	char	*input;
 	t_exe	*exe;
-
+	
 	while (true)
 	{
 		ft_printf(MAGENTA);
+		termios_echoback(false);
 		if (!isatty(fileno(stdin)))
 		{
         	ft_printf("➜  ");
@@ -39,6 +40,8 @@ static void    shell_loop(char **envp)
 			input = ft_strtrim(readline("➜  "), " \t");
 		if (input && input[0])
 		{
+			if (!ft_strncmp(input, "exit", ft_strlen("exit") + 1))
+				break;
 			add_history(input);
 			init_g(envp, input);
 			exe = ms_init(input);

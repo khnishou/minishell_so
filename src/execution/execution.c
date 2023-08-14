@@ -14,20 +14,20 @@
 
 static void run_cmd(t_exe *exe, int flag)
 {
-    if (!ft_strncmp(exe->cmd[0], "cd", ft_strlen("cd")))
+    if (!ft_strncmp(exe->cmd[0], "cd", ft_strlen("cd") + 1))
         ft_cd(exe, flag);    
-    else if (!ft_strncmp(exe->cmd[0], "pwd", ft_strlen("pwd")))
+    else if (!ft_strncmp(exe->cmd[0], "pwd", ft_strlen("pwd") + 1))
         ft_pwd(exe, flag);
-    else if (!ft_strncmp(exe->cmd[0], "export", ft_strlen("export")))
+    else if (!ft_strncmp(exe->cmd[0], "export", ft_strlen("export") + 1))
         ft_export(exe, flag);
-    else if (!ft_strncmp(exe->cmd[0], "unset", ft_strlen("unset")))
+    else if (!ft_strncmp(exe->cmd[0], "unset", ft_strlen("unset") + 1))
         ft_unset(exe, flag);
-    else if (!ft_strncmp(exe->cmd[0], "env", ft_strlen("env")))
+    else if (!ft_strncmp(exe->cmd[0], "env", ft_strlen("env") + 1))
         ft_env(exe, flag);
-    else if (!ft_strncmp(exe->cmd[0], "echo", ft_strlen("echo")))
+    else if (!ft_strncmp(exe->cmd[0], "echo", ft_strlen("echo") + 1))
         ft_echo(exe, flag);
-    // if (!ft_strncmp(exe->cmd[0], "exit", ft_strlen("exit")))
-    //     ft_exit(exe, g_data);
+    else
+        ft_printf("%s: command not found\n", exe->cmd[0]);
 }
 
 static void execute_command(t_exe *exe, t_exe *exe_prev)

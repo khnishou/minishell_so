@@ -12,12 +12,32 @@
 
 #include "../../includes/minishell.h"
 
+int	termios_echoback(bool echo_ctl_chr)
+{
+	struct termios	terminos_p;
+	int				status;
+
+	(void)echo_ctl_chr;
+	status = tcgetattr(STDOUT_FILENO, &terminos_p);
+	if (status == -1)
+		return (1);
+	terminos_p.c_lflag &= ~(ECHOCTL);
+	status = tcsetattr(STDOUT_FILENO, TCSANOW, &terminos_p);
+	if (status == -1)
+		return (1);
+	return (0);
+}
+
 void	sig_handler(int sig_number)
 {
+	// if (sig_number == SIGINT)
+	// 	ft_printf("➜  ");
 	if (sig_number == SIGINT)
 	{
-		
-		ft_printf("➜  ");
+		write(STDERR_FILENO, "\n", 1);
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
 	}
 	return ;
 }
