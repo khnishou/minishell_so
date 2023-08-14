@@ -69,26 +69,36 @@ void	ft_cd(t_exe *exe, int flag)
 	if (exe->cmd[1] == NULL)
 	{
 		// invalid nbr arg error msg
-		g_data.exit_status = 1;
-		if (flag)
-			exit(1);
-		else
-			return ;
+		// g_data.exit_status = 1;
+		// if (flag)
+		// 	exit(1);
+		// else
+		// 	return ;
+		chdir(ms_getenv("HOME"));
+		if (getcwd(cwd, sizeof(cwd)) != NULL)
+			g_data.envp = update_envp(g_data.envp, cwd);
+		g_data.exit_status = 0;
 	}
-	if (chdir(exe->cmd[1]) == -1)
-		g_data.exit_status = errno;
-	if (getcwd(cwd, sizeof(cwd)) != NULL)
-		g_data.envp = update_envp(g_data.envp, cwd);
-	if (g_data.envp == NULL)
+	else if (chdir(exe->cmd[1]) == -1)
 	{
-		// do stuff
-		g_data.exit_status = 1;
-		if (flag)
-			exit(1);
-		else
-			return ;
+		ft_printf("cd: %s: No such file or directory\n", exe->cmd[1]);
+		g_data.exit_status = errno;
 	}
-	g_data.exit_status = 0;
+	else
+	{
+		if (getcwd(cwd, sizeof(cwd)) != NULL)
+			g_data.envp = update_envp(g_data.envp, cwd);
+		if (g_data.envp == NULL)
+		{
+			// do stuff
+			g_data.exit_status = 1;
+			if (flag)
+				exit(1);
+			else
+				return ;
+		}
+		g_data.exit_status = 0;
+	}
 	if (flag)
 		exit(0);
 }

@@ -14,12 +14,35 @@
 
 void	ft_echo(t_exe *exe, int flag)
 {
-	int	i;
+	int		len;
+	int		i;
+	bool	no_new_line;
 
-	i = -1;
-	ft_printf("%d\n", i);
-	while (exe->cmd[++i])
-		ft_printf("%d\n", i);
+	len = -1;
+	i = 1;
+	no_new_line = false;
+	while (exe->cmd[++len])
+		;
+	if (len == 1)
+	{
+		ft_printf("\n");
+		return ;
+	}
+	while(i < len)
+	{
+		if (i == 1 && !ft_strncmp(exe->cmd[i], "-n", ft_strlen("-n") + 1))
+			no_new_line = true;
+		else
+		{
+			if (i == len - 1)
+				ft_printf("%s", exe->cmd[i]);
+			else
+				ft_printf("%s ", exe->cmd[i]);
+		}
+		i++;
+	}
+	if (no_new_line == false)
+		ft_printf("\n");
 	// if (i != 2 && i != 3)
 	// {
 	// 	// add error message, invalid number of args
@@ -29,15 +52,15 @@ void	ft_echo(t_exe *exe, int flag)
 	// 	else
 	// 		return ;
 	// }
-	if (i == 2)
-		ft_printf("%s\n", exe->cmd[1]);
-	else if (!ft_strncmp(exe->cmd[1], "-n", ft_strlen("-n")) && exe->cmd[2])
-		ft_printf("%s", exe->cmd[2]);
-	else
-	{
-		// invalid option error msg
-		g_data.exit_status = 1;
-	}
+	// if (i == 2)
+	// 	ft_printf("%s\n", exe->cmd[1]);
+	// else if (!ft_strncmp(exe->cmd[1], "-n", ft_strlen("-n") + 1) && exe->cmd[2])
+	// 	ft_printf("%s", exe->cmd[2]);
+	// else
+	// {
+	// 	// invalid option error msg
+	// 	g_data.exit_status = 1;
+	// }
 	if (flag)
 		exit(0);
 }
