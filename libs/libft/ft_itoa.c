@@ -6,7 +6,7 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 13:45:49 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/07/12 23:49:18 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/08/04 22:26:16 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char	*ft_itoa(int n)
 	if (n == INT_MIN)
 		return (ft_strdup("-2147483648"));
 	len = ft_intlen(n);
-	d = malloc (len + (n < 0) + 1);
+	d = ft_malloc(&(g_data.mem_list), len + (n < 0) + 1);
 	if (!d)
 		return (NULL);
 	d[len + (n < 0)] = 0;

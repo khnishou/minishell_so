@@ -6,7 +6,7 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/29 13:41:49 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/07/12 23:49:38 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/07/24 17:37:20 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ unsigned int	ft_strlcpy(char *dest, const char *src, unsigned int size)
 	unsigned int	lsrc;
 
 	lsrc = 0;
+	if (!src)
+		return (0);
 	while (src[lsrc] != '\0')
 		lsrc++;
 	if (size > 0)

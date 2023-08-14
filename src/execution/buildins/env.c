@@ -1,35 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smallem <smallem@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/21 14:10:51 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/08/05 17:40:58 by smallem          ###   ########.fr       */
+/*   Created: 2023/08/03 05:21:54 by ykerdel           #+#    #+#             */
+/*   Updated: 2023/08/07 12:49:55 by smallem          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/libft.h"
+#include "../../../includes/minishell.h"
 
-char *ft_strjoin(char *s1, char *s2)
+void	ft_env(t_exe *exe, int flag)
 {
-	size_t i;
-	size_t j;
-	char *join;
+	int	i;
 
-	join = ft_malloc(&(g_data.mem_list), sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
-	if (!join)
-		return (NULL);
+	if (exe->cmd[1] != NULL)
+	{
+		//error nessages too many args
+		if (flag)
+			exit(1);
+		else
+			return ;
+	}
 	i = 0;
-	j = 0;
-	if (s1)
-		while (s1[i])
-			join[j++] = s1[i++];
-	i = 0;
-	if (s2)
-		while (s2[i])
-			join[j++] = s2[i++];
-	join[j] = 0;
-	return (join);
+	while (g_data.envp[i])
+	{
+		ft_printf("%s\n", g_data.envp[i]);
+		i++;
+	}
+	g_data.exit_status = 0;
+	if (flag == 1)
+		exit(0);
 }

@@ -6,7 +6,7 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:03:26 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/07/17 16:10:23 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/08/04 22:26:31 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		size = ft_strlen(s) - start;
 	else
 		size = len;
-	d = malloc (size + 1);
+	d = ft_malloc(&(g_data.mem_list), size + 1);
 	if (d == NULL)
 		return (NULL);
 	tt_strlcpy(d, s + start, len);

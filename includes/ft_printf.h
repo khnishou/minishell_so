@@ -1,24 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/07 18:54:42 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/07/07 20:02:03 by ykerdel          ###   ########.fr       */
+/*   Created: 2023/04/13 14:42:25 by schibane          #+#    #+#             */
+/*   Updated: 2023/07/24 20:46:05 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#ifndef FT_PRINTF_H
+# define FT_PRINTF_H
 
-void    ms_exit(t_error err)
-{
-    if (err == VALID)
-        exit (0);
-    if (err == ARGC_ERR)
-        printf(RED"Please don't overflow me\n"RESET);
-    if (err == MALLOC_ERR)
-        printf(RED"Malloc fail\n"RESET);
-    exit (1);
-}
+#include "./libft.h"
+# include<stdarg.h>
+
+int		ft_printf(const char *str, ...);
+void	ft_putchar_count(char c, int *ret);
+void	ft_putstr_count(char *str, int *ret);
+void	ft_puthex_adress_count(unsigned long long nbr, int cap,
+			int adr, int *ret);
+void	ft_putnbr_count(int n, int *ret);
+#endif

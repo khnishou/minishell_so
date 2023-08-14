@@ -3,46 +3,68 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: smallem <smallem@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 17:01:25 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/07/16 17:37:05 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/08/12 16:48:31 by smallem          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./includes/minishell.h"
 
-int	exit_status = 0;
-
-static void    shell_loop()
+void	init_g(char **envp, char *input)
 {
-	char	*input;
-	t_exe	*exe;
-
-	while (true)
+	g_data.nb_pipe = ms_count_char(input, TK_PIPE);
+	if (!g_data.envp)
 	{
-		printf(MAGENTA);
-		if (!isatty(fileno(stdin)))
-			input = ft_strtrim(get_next_line(fileno(stdin)), " \t");
-		else
-			input = ft_strtrim(readline("➜  "), " \t");
-		printf(RESET);
-		if (!input || !ft_strtrim(input," ")[0])
-			printf(BLUE"Please feed me :/\n"RESET);
-		else
-			add_history(input);
-		exe = ms_init(input, &exit_status);
-		if (exe)
-			printf("idk\n");
-		
+		g_data.envp = copy_envp(envp);
+		g_data.exit_status = 0;
 	}
 }
 
-int main(int argc, char *argv[])
+static void    shell_loop(char **envp)
 {
-	(void)argv;
+	char	*input;
+	t_exe	*exe;
+	
+	while (true)
+	{
+		ft_printf(MAGENTA);
+		termios_echoback(false);
+		if (!isatty(fileno(stdin)))
+		{
+        	ft_printf("➜  ");
+			input = ft_strtrim(get_next_line(fileno(stdin)), " \t");
+		}
+		else
+			input = ft_strtrim(readline("➜  "), " \t");
+		if (input && input[0])
+		{
+			if (!ft_strncmp(input, "exit", ft_strlen("exit") + 1))
+				break;
+			add_history(input);
+			init_g(envp, input);
+			exe = ms_init(input);
+			if (!exe)
+				ms_exit(QLAWI_ERR);
+			launch(exe);
+			//system("leaks minishell");
+		}
+		else if (input == NULL)
+			break ;
+	}
+	ft_printf(RESET);
+}
+
+int main(int argc, char *argv[], char *envp[])
+{
+	struct sigaction	sa;
+
+	init_sig(&sa);
+	(void) argv;
 	if (argc != 1)
 		printf(RED"args will be ignored\n\n"RESET);
-	shell_loop();
+	shell_loop(envp);
+	free_lst(&(g_data.mem_list));
 	return (0);
 }
