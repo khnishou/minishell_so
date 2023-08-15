@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sig.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smallem <smallem@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 12:37:47 by smallem           #+#    #+#             */
-/*   Updated: 2023/08/12 17:01:28 by smallem          ###   ########.fr       */
+/*   Updated: 2023/08/15 01:47:28 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,6 @@ int	termios_echoback(bool echo_ctl_chr)
 
 void	sig_handler(int sig_number)
 {
-	// if (sig_number == SIGINT)
-	// 	ft_printf("➜  ");
 	if (sig_number == SIGINT)
 	{
 		write(STDERR_FILENO, "\n", 1);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smallem <smallem@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 18:54:38 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/08/12 16:58:12 by smallem          ###   ########.fr       */
+/*   Updated: 2023/08/15 15:23:17 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ void launch(t_exe *exe)
     // pid_t   pids[g_data.nb_pipe + 1];
     
     i = -1;
+
     exe->pids = malloc(sizeof(pid_t) * (g_data.nb_pipe + 1));
     if (g_data.nb_pipe == 0 && check_cmd(exe[0].cmd[0]))
         run_cmd(exe, 0);

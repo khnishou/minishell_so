@@ -6,7 +6,7 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 18:54:56 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/08/04 21:35:37 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/08/15 05:17:30 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ int append_handler(char **str, int index)
 {
 	size_t  start;
     size_t  i;
-    int fd;
+    int     fd;
+    char    *file_name;
     
     i = index;
     i += 2;
@@ -52,8 +53,10 @@ int append_handler(char **str, int index)
         return (-1);
     start = i;
     while ((*str)[i] && (ft_isalnum((*str)[i]) || (*str)[i] == TK_PERIOD || (*str)[i] == TK_HYPHEN || (*str)[i] == TK_UNDERSCORE))
-    i++;
-    fd = open(ft_substr(*str, start, i - start), O_RDWR | O_CREAT | O_APPEND, 0000644);
+        i++;
+    file_name = ft_substr(*str, start, i - start);
+    ms_clean(&file_name);
+    fd = open(file_name, O_RDWR | O_CREAT | O_APPEND, 0000644);
     if (fd == -1)
         perror("Minishell");
     *str = ms_swapstr(*str, NULL, index, i - index);

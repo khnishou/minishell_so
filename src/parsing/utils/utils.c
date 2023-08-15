@@ -6,7 +6,7 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 19:30:46 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/08/04 22:18:29 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/08/15 05:17:58 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,11 @@ int  ms_quote_skip(char *str, size_t i, char token)
 {
     i++;
     while (str[i] && str[i] != token)
+    {
         i++;
+// dprintf(2, "str[%d] = %c\n", i, str[i]);
+        
+    }
     if (!str[i])
         return (-1);
     return (i);

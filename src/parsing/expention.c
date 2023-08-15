@@ -6,7 +6,7 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 16:33:25 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/08/04 21:45:33 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/08/15 01:56:58 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,19 +61,18 @@ int    expend_dollar(char **str, int i, bool flag)
 
 int expend_quote(char **str, int i, char token)
 {
-    int flag;
-
-    flag = 1;
     i++;
-    while (((*str)[i] && (*str)[i] != token) || flag)
+    while (((*str)[i] && (*str)[i] != token))
     {
-        flag = 0;
         if (token == TK_D_QUOTE && (*str)[i] == TK_DOLLAR)
             i = expend_dollar(str, i, false);
         i++;
     }
     if (!(*str)[i])
+    {
+        ft_printf("syntax error\n");
         return (-1);
+    }
     i++;
     return (i);
 }

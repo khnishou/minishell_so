@@ -45,7 +45,7 @@ static int open_heredoc(char *str, char *exit, int tk_count)
         ft_printf("heredoc>  ");
         line = get_next_line(1);
     }
-    fd = open("heredoc", O_WRONLY | O_CREAT | O_TRUNC, 0000644);
+    fd = open("heredoc", O_WRONLY | O_CREAT | O_TRUNC, 0000777);
     if (fd == -1) {
         perror("Error opening heredoc file");
         return (-1);
@@ -79,5 +79,7 @@ int heredoc_handler(char **str, int index)
     exit = quote_str_get(ft_substr((*str), start, i - start), tk_count);
     *str = ms_swapstr(*str, NULL, index, i - index);
     i = open_heredoc((*str), exit, tk_count);
+    close(i);
+    i = open("heredoc", O_RDWR | O_TRUNC | O_CREAT, 0000644);
     return (i);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smallem <smallem@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/30 17:01:25 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/08/12 16:48:31 by smallem          ###   ########.fr       */
+/*   Created: 2023/08/15 14:23:57 by ykerdel           #+#    #+#             */
+/*   Updated: 2023/08/15 15:36:59 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void    shell_loop(char **envp)
 	
 	while (true)
 	{
-		ft_printf(MAGENTA);
+		// ft_printf(MAGENTA);
 		termios_echoback(false);
 		if (!isatty(fileno(stdin)))
 		{
@@ -37,7 +37,7 @@ static void    shell_loop(char **envp)
 			input = ft_strtrim(get_next_line(fileno(stdin)), " \t");
 		}
 		else
-			input = ft_strtrim(readline("➜  "), " \t");
+			input = ft_strtrim(readline(""), " \t");
 		if (input && input[0])
 		{
 			if (!ft_strncmp(input, "exit", ft_strlen("exit") + 1))
@@ -47,13 +47,14 @@ static void    shell_loop(char **envp)
 			exe = ms_init(input);
 			if (!exe)
 				ms_exit(QLAWI_ERR);
+			// dprintf(2, "fd = %d\n", exe[1].fd_in);
 			launch(exe);
 			//system("leaks minishell");
 		}
 		else if (input == NULL)
 			break ;
 	}
-	ft_printf(RESET);
+	// ft_printf(RESET);
 }
 
 int main(int argc, char *argv[], char *envp[])
