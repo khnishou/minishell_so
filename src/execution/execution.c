@@ -6,7 +6,7 @@
 /*   By: smallem <smallem@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 18:54:38 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/08/16 19:06:56 by smallem          ###   ########.fr       */
+/*   Updated: 2023/08/16 19:54:10 by smallem          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ static void run_cmd(t_exe *exe, int flag)
         ft_env(exe, flag);
     else if (!ft_strncmp(exe->cmd[0], "echo", ft_strlen("echo") + 1))
         ft_echo(exe, flag);
+    else if (!ft_strncmp(exe->cmd[0], "exit", ft_strlen("exit") + 1))
+		builtin_exit(exe, flag);
     else
         ft_printf("%s: command not found\n", exe->cmd[0]);
 }
