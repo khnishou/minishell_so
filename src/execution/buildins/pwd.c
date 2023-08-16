@@ -6,7 +6,7 @@
 /*   By: smallem <smallem@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/29 16:14:35 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/08/07 12:51:03 by smallem          ###   ########.fr       */
+/*   Updated: 2023/08/16 19:10:22 by smallem          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,16 @@ void	ft_pwd(t_exe *exe, int flag)
 {
 	char	cwd[1024];
 
+	g_data.exit_status = 0;
 	if (exe->cmd[1] != NULL)
 	{
+		g_data.exit_status = 1;
 		if (exe->cmd[1][0] == '-')
 			ft_printf("bad option:\n");
 		else
 			ft_printf("too many arguments\n");
 		if (flag)
-			exit(1);
+			ft_exit();
 		else
 			return ;
 	}
@@ -35,5 +37,5 @@ void	ft_pwd(t_exe *exe, int flag)
 	else
 		g_data.exit_status = errno;
 	if (flag)
-		exit(0);
+		ft_exit();
 }

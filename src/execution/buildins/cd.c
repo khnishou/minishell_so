@@ -6,7 +6,7 @@
 /*   By: smallem <smallem@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 05:21:42 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/08/07 12:52:54 by smallem          ###   ########.fr       */
+/*   Updated: 2023/08/16 19:08:26 by smallem          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,18 +66,12 @@ void	ft_cd(t_exe *exe, int flag)
 {
 	char	cwd[1024];
 
+	g_data.exit_status = 0;
 	if (exe->cmd[1] == NULL)
 	{
-		// invalid nbr arg error msg
-		// g_data.exit_status = 1;
-		// if (flag)
-		// 	exit(1);
-		// else
-		// 	return ;
 		chdir(ms_getenv("HOME"));
 		if (getcwd(cwd, sizeof(cwd)) != NULL)
 			g_data.envp = update_envp(g_data.envp, cwd);
-		g_data.exit_status = 0;
 	}
 	else if (chdir(exe->cmd[1]) == -1)
 	{
@@ -93,12 +87,12 @@ void	ft_cd(t_exe *exe, int flag)
 			// do stuff
 			g_data.exit_status = 1;
 			if (flag)
-				exit(1);
+				ft_exit();
 			else
 				return ;
 		}
 		g_data.exit_status = 0;
 	}
 	if (flag)
-		exit(0);
+		ft_exit();
 }

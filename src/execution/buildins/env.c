@@ -6,7 +6,7 @@
 /*   By: smallem <smallem@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 05:21:54 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/08/07 12:49:55 by smallem          ###   ########.fr       */
+/*   Updated: 2023/08/16 19:08:46 by smallem          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,10 @@ void	ft_env(t_exe *exe, int flag)
 
 	if (exe->cmd[1] != NULL)
 	{
-		//error nessages too many args
+		ft_printf("too many arguments\n");
+		g_data.exit_status = 1;
 		if (flag)
-			exit(1);
+			exit(g_data.exit_status);
 		else
 			return ;
 	}
@@ -32,5 +33,5 @@ void	ft_env(t_exe *exe, int flag)
 	}
 	g_data.exit_status = 0;
 	if (flag == 1)
-		exit(0);
+		exit(g_data.exit_status);
 }

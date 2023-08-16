@@ -6,7 +6,7 @@
 /*   By: smallem <smallem@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/05 15:50:30 by smallem           #+#    #+#             */
-/*   Updated: 2023/08/05 15:55:36 by smallem          ###   ########.fr       */
+/*   Updated: 2023/08/16 18:56:14 by smallem          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,9 @@ int	ev_input_check(t_exe *exe)
 		i++;
 	}
 	return (1);
+}
+void	ft_exit(void)
+{
+	// free the memory from gb collector
+	exit(g_data.exit_status);
 }

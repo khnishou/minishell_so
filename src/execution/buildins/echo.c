@@ -3,14 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: smallem <smallem@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 05:21:49 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/08/14 20:43:19 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/08/16 19:07:38 by smallem          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
+
+static	int	skip(t_exe *exe)
+{
+	int	flag;
+	int	i;
+
+	i = 1;
+	if (exe->cmd[1][0] == '-' && exe->cmd[1][1] != 'n')
+		return (-1);
+	if (!ft_strncmp(exe->cmd[1], "-n", ft_strlen("-n")))
+	{
+		while (exe->cmd[i] && !ft_strncmp(exe->cmd[i], "-n", ft_strlen("-n")))
+			i++;
+	}
+	return (i);
+}
 
 void	ft_echo(t_exe *exe, int flag)
 {
@@ -18,12 +34,12 @@ void	ft_echo(t_exe *exe, int flag)
 	int		i;
 	bool	no_new_line;
 
-	len = 0;
+	len = -1;
 	i = 1;
 	no_new_line = false;
-	
-	while (exe->cmd[len] != NULL)
-		len++;
+	g_data.exit_status = 0;
+	while (exe->cmd[++len])
+		;
 	if (len == 1)
 	{
 		ft_printf("\n");
@@ -31,12 +47,19 @@ void	ft_echo(t_exe *exe, int flag)
 	}
 	while(i < len)
 	{
-		if (!ft_strncmp(exe->cmd[1], "-n", ft_strlen("-n") + 1))
-			no_new_line = true;
-		else if (!ft_strncmp(exe->cmd[1], "-", ft_strlen("-")))
+		if (i == 1 && !ft_strncmp(exe->cmd[i], "-n", ft_strlen("-n") + 1))
 		{
-			ft_printf("echo %s: command not found", exe->cmd[1]);
-			g_data.exit_status = 127;
+			i = skip(exe);
+			if (i < 0)
+			{
+				g_data.exit_status = 1;
+				if (flag)
+					ft_exit();
+				else
+					return ;
+			}
+			i--;
+			no_new_line = true;
 		}
 		else
 		{
@@ -50,5 +73,5 @@ void	ft_echo(t_exe *exe, int flag)
 	if (no_new_line == false)
 		ft_printf("\n");
 	if (flag)
-		exit(0);
+		ft_exit();
 }

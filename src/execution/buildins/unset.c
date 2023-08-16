@@ -6,7 +6,7 @@
 /*   By: smallem <smallem@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 05:22:02 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/08/07 12:50:21 by smallem          ###   ########.fr       */
+/*   Updated: 2023/08/16 19:10:03 by smallem          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,10 @@ void	ft_unset(t_exe *exe, int flag)
 
 	if (exe->cmd[1] != NULL)
 	{
-		//error nessages too many args
+		g_data.exit_status = 1;
+		ft_printf("too many arguments\n");
 		if (flag)
-			exit(1);
+			ft_exit();
 		else
 			return ;
 	}
@@ -51,8 +52,9 @@ void	ft_unset(t_exe *exe, int flag)
 	if (new_ev == NULL)
 	{
 		//error
+		g_data.exit_status = 1;
 		if (flag)
-			exit(1);
+			ft_exit();
 		else
 			return ;
 	}
@@ -69,5 +71,5 @@ void	ft_unset(t_exe *exe, int flag)
 	g_data.envp = new_ev;
 	g_data.exit_status = 0;
 	if (flag)
-		exit(0);
+		ft_exit();
 }
