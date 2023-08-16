@@ -6,7 +6,7 @@
 /*   By: smallem <smallem@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 12:02:20 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/08/16 19:10:07 by smallem          ###   ########.fr       */
+/*   Updated: 2023/08/16 20:09:22 by smallem          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,7 @@ void 	ft_export(t_exe *exe, int flag);
 void    ft_env(t_exe *exe, int flag);
 void    ft_echo(t_exe *exe, int flag);
 void    ft_cd(t_exe *exe, int flag);
+void    builtin_exit(t_exe *exe, int flag);
 int 	ev_input_check(t_exe *exe);
 char	**copy_envp(char **envp);
 void	init_sig(struct sigaction *sa);

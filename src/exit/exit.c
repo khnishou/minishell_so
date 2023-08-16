@@ -6,7 +6,7 @@
 /*   By: smallem <smallem@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 18:54:42 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/08/16 20:08:37 by smallem          ###   ########.fr       */
+/*   Updated: 2023/08/16 20:09:57 by smallem          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,10 @@ void    builtin_exit(t_exe *exe, int flag)
         ;
     if (len == 2)
     {
-        nbr = ft_atoi(exe->cmd[i]);
+        nbr = ft_atoi(exe->cmd[1]);
         tmp = ft_itoa(nbr);
-        if (!ft_strncmp(exe->cmd[i], tmp, ft_strlen(exe->cmd[i]))
-            && !ft_strncmp(exe->cmd[i], tmp, ft_strlen(tmp)))
+        if (!ft_strncmp(exe->cmd[1], tmp, ft_strlen(exe->cmd[1]))
+            && !ft_strncmp(exe->cmd[1], tmp, ft_strlen(tmp)))
             g_data.exit_status = nbr;
         else
             g_data.exit_status = 255;
