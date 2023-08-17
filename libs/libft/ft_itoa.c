@@ -6,7 +6,7 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 13:45:49 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/08/04 22:26:16 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/08/16 23:46:01 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,17 @@ static size_t	ft_intlen(int n)
 	return (i);
 }
 
-char	*ft_itoa(int n)
+char	*ft_itoa(int n, t_data *g_data)
 {
 	int		len;
 	char	*d;
 
 	if (n == 0)
-		return (ft_strdup("0"));
+		return (ft_strdup("0", g_data));
 	if (n == INT_MIN)
-		return (ft_strdup("-2147483648"));
+		return (ft_strdup("-2147483648", g_data));
 	len = ft_intlen(n);
-	d = ft_malloc(&(g_data.mem_list), len + (n < 0) + 1);
+	d = ft_malloc(&(g_data->mem_list), len + (n < 0) + 1);
 	if (!d)
 		return (NULL);
 	d[len + (n < 0)] = 0;

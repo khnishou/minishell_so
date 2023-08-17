@@ -6,7 +6,7 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 05:21:49 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/08/14 20:43:19 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/08/16 05:32:15 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,8 @@ void	ft_echo(t_exe *exe, int flag)
 	}
 	while(i < len)
 	{
-		if (!ft_strncmp(exe->cmd[1], "-n", ft_strlen("-n") + 1))
+		if (!ft_strncmp(exe->cmd[1], "-n", ft_strlen("-n")))
 			no_new_line = true;
-		else if (!ft_strncmp(exe->cmd[1], "-", ft_strlen("-")))
-		{
-			ft_printf("echo %s: command not found", exe->cmd[1]);
-			g_data.exit_status = 127;
-		}
 		else
 		{
 			if (i == len - 1)

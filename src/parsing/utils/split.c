@@ -6,7 +6,7 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/15 20:01:21 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/08/03 05:22:38 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/08/17 01:41:48 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,21 +39,23 @@ char	*parse_str(char *str)
 	return (str);
 }
 
-char	**ms_split(char **str)
+char	**ms_split(char **str, t_data *g_data)
 {
-	size_t	i;
+	size_t	ints[2];
 	char	**cmd;
 	char	*str1;
 	char	*tmp;
 
-	i = 0;
-	while ((*str)[i] && (*str)[i] != TK_PIPE)
-		i++;
-	tmp = ft_substr((*str), 0, i);
+	ints[_i] = 0;
+	while ((*str)[ints[_i]] && (*str)[ints[_i]] != TK_PIPE)
+		ints[_i]++;
+	tmp = ft_substr((*str), 0, ints[_i], g_data);
 	str1 = parse_str(tmp);
-	cmd = ft_split(str1, '\t');
-	if ((*str)[i] == TK_PIPE)
-		i++;
-    *str = ms_swapstr(*str, NULL, 0, i);
+	cmd = ft_split(str1, '\t', g_data);
+	if ((*str)[ints[_i]] == TK_PIPE)
+		ints[_i]++;
+	ints[_j] = ints[_i];
+	ints[_i] = 0;
+    *str = ms_swapstr(*str, NULL, ints, g_data);
 	return (cmd);
 }

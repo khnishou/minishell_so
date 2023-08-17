@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smallem <smallem@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:10:51 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/08/05 17:40:58 by smallem          ###   ########.fr       */
+/*   Updated: 2023/08/16 23:46:22 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/libft.h"
 
-char *ft_strjoin(char *s1, char *s2)
+char *ft_strjoin(char *s1, char *s2, t_data *g_data)
 {
 	size_t i;
 	size_t j;
 	char *join;
 
-	join = ft_malloc(&(g_data.mem_list), sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
+	join = ft_malloc(&(g_data->mem_list), sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
 	if (!join)
 		return (NULL);
 	i = 0;

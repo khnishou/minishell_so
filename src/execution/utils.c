@@ -6,30 +6,31 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 05:12:39 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/08/15 15:07:51 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/08/17 01:29:46 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static char **path_find(void)
+static char **path_find(t_data *g_data)
 {
     int     i;
     char    **ch;
 
     i = 0;
-    while (g_data.envp[i])
+    while (g_data->envp[i])
     {
-        if (ft_strncmp("PATH=", g_data.envp[i], ft_strlen("PATH=")) == 0)
+        if (ft_strncmp("PATH=", g_data->envp[i], ft_strlen("PATH=")) == 0)
             break ;
         i++;
     }
-    ch = ft_split(g_data.envp[i] + ft_strlen("PATH="), ':');
+    ch = ft_split(g_data->envp[i] + ft_strlen("PATH="), ':', g_data);
     return (ch);
 }
 
 int	check_cmd(char *cmd)
 {
+
 	if (!ft_strncmp(cmd, "cd", ft_strlen("cd"))
 		|| !ft_strncmp(cmd, "pwd", ft_strlen("pwd"))
 		|| !ft_strncmp(cmd, "export", ft_strlen("export"))	
@@ -38,28 +39,24 @@ int	check_cmd(char *cmd)
 		|| !ft_strncmp(cmd, "echo", ft_strlen("echo"))	
 		|| !ft_strncmp(cmd, "unset", ft_strlen("unset")))
 		return (1);
-	else
-		return (0);
+	return (0);
 }
 
-char	*find_path(char *cmd)
+char	*find_path(char *cmd, t_data *g_data)
 {
 	char	**p_path;
 	char	*tmp;
 	char	*tmp_f;
 	int		i;
 
-	p_path = path_find();
+	p_path = path_find(g_data);
 	i = -1;
 	while (p_path[++i])
 	{
-		tmp = ft_strjoin("/", cmd);		
-		tmp_f = ft_strjoin(p_path[i], tmp);
+		tmp = ft_strjoin("/", cmd, g_data);		
+		tmp_f = ft_strjoin(p_path[i], tmp, g_data);
 		if (!access(tmp_f, X_OK))
-		{
-			//free stuff
 			return (tmp_f);
-		}
 	}
 	ft_printf("%s: command not found\n", cmd);
 	return (NULL);

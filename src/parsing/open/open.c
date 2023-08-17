@@ -6,21 +6,21 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 18:54:56 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/08/15 05:17:30 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/08/17 01:18:55 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
-int single_redirect(char **str, int index, int fd, char token)
+int single_redirect(char **str, int *ints, char token, t_data *g_data)
 {
     int  start;
     int  i;
 
-    i = index;
+    i = ints[_i];
     i++;  
-    if (fd > 0)
-        close(fd);
+    if (ints[_fd] > 0)
+        close(ints[_fd]);
     while ((*str)[i] && (*str)[i] == TK_SPACE)
         i++;
     if ((*str)[i] == TK_PIPE)
@@ -29,41 +29,45 @@ int single_redirect(char **str, int index, int fd, char token)
     while ((*str)[i] && (ft_isalnum((*str)[i]) || (*str)[i] == TK_PERIOD || (*str)[i] == TK_HYPHEN || (*str)[i] == TK_UNDERSCORE))
         i++;
     if (token == TK_GREATER)
-		fd = open(ft_substr(*str, start, i - start), O_RDWR | O_TRUNC | O_CREAT, 0000644);
+		ints[_fd] = open(ft_substr(*str, start, i - start, g_data), O_RDWR | O_TRUNC | O_CREAT, 0000644);
     else if (token == TK_LESS)
-        fd = open(ft_substr(*str, start, i - start), O_RDONLY);
-    if (fd == -1)
+        ints[_fd] = open(ft_substr(*str, start, i - start, g_data), O_RDONLY);
+    if (ints[_fd] == -1)
         perror("Minishell");
-    *str = ms_swapstr(*str, NULL, index, i - index);
-    return (fd);
+    ints[_j] = i - ints[_i];
+    *str = ms_swapstr(*str, NULL, (size_t *)ints, g_data);
+    return (ints[_fd]);
 }
 
-int append_handler(char **str, int index)
+int append_handler(char **str, int index, t_data *g_data)
 {
-	size_t  start;
-    size_t  i;
+    size_t ints[2];
+	// size_t  start;
+    // size_t  i;
     int     fd;
     char    *file_name;
     
-    i = index;
-    i += 2;
-    while ((*str)[i] && (*str)[i] == TK_SPACE)
-        i++;
-    if ((*str)[i] == TK_PIPE)
+    ints[_j] = index;
+    ints[_j] += 2;
+    while ((*str)[ints[_j]] && (*str)[ints[_j]] == TK_SPACE)
+        ints[_j]++;
+    if ((*str)[ints[_j]] == TK_PIPE)
         return (-1);
-    start = i;
-    while ((*str)[i] && (ft_isalnum((*str)[i]) || (*str)[i] == TK_PERIOD || (*str)[i] == TK_HYPHEN || (*str)[i] == TK_UNDERSCORE))
-        i++;
-    file_name = ft_substr(*str, start, i - start);
-    ms_clean(&file_name);
+    ints[_start] = ints[_j];
+    while ((*str)[ints[_j]] && (ft_isalnum((*str)[ints[_j]]) || (*str)[ints[_j]] == TK_PERIOD || (*str)[ints[_j]] == TK_HYPHEN || (*str)[ints[_j]] == TK_UNDERSCORE))
+        ints[_j]++;
+    file_name = ft_substr(*str, ints[_start], ints[_j] - ints[_start], g_data);
+    ms_clean(&file_name, g_data);
     fd = open(file_name, O_RDWR | O_CREAT | O_APPEND, 0000644);
     if (fd == -1)
         perror("Minishell");
-    *str = ms_swapstr(*str, NULL, index, i - index);
+    ints[_start] = index;
+    ints[_j] = ints[_j] - index;
+    *str = ms_swapstr(*str, NULL, ints, g_data);
     return (fd);
 }
 
-int double_redirect(char **str, size_t index, char token)
+int double_redirect(char **str, size_t index, char token, t_data *g_data)
 {
     int i;
     int fd;
@@ -74,33 +78,32 @@ int double_redirect(char **str, size_t index, char token)
     if ((*str)[i] == TK_PIPE)
         return (-2);
     if (token == TK_GREATER)
-        fd = append_handler(str, index);
+        fd = append_handler(str, index, g_data);
     else if (token == TK_LESS)
-        fd = heredoc_handler(str, index);
+        fd = heredoc_handler(str, index, g_data);
     return (fd);
 }
 
-int ms_open(char **str, char token)
+int ms_open(char **str, char token, t_data *g_data)
 {
-    int fd;
-    int i;
+    int ints[2];
 
-    i = 0;
-    fd = 0;
-    while ((*str)[i] && (*str)[i] != TK_PIPE)
+    ints[_i] = 0;
+    ints[_fd] = 0;
+    while ((*str)[ints[_i]] && (*str)[ints[_i]] != TK_PIPE)
     {
-        if ((*str)[i] == token)
+        if ((*str)[ints[_i]] == token)
         {
-            if ((*str)[i + 1] && (*str)[i + 1] == token)
+            if ((*str)[ints[_i] + 1] && (*str)[ints[_i] + 1] == token)
             {
-                if (fd > 0)
-                    close(fd);
-                fd = double_redirect(str, i, token);
+                if (ints[_fd] > 0)
+                    close(ints[_fd]);
+                ints[_fd] = double_redirect(str, ints[_i], token, g_data);
             }
             else
-                fd = single_redirect(str, i, fd, token);
+                ints[_fd] = single_redirect(str, ints, token, g_data);
         }
-        i++;
+        ints[_i]++;
     }
-    return (fd);
+    return (ints[_fd]);
 }

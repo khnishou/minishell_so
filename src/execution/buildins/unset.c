@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smallem <smallem@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 05:22:02 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/08/07 12:50:21 by smallem          ###   ########.fr       */
+/*   Updated: 2023/08/17 01:49:20 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	ft_skip(char *ev_line, char **cmd)
 	return (0);
 }
 
-void	ft_unset(t_exe *exe, int flag)
+void	ft_unset(t_exe *exe, int flag, t_data *g_data)
 {
 	char	**new_ev;
 	int		size;
@@ -41,7 +41,7 @@ void	ft_unset(t_exe *exe, int flag)
 			return ;
 	}
 	i = -1;
-	while (g_data.envp[++i])
+	while (g_data->envp[++i])
 		;
 	nb_arg = 1;
 	while (exe->cmd[nb_arg])
@@ -58,16 +58,16 @@ void	ft_unset(t_exe *exe, int flag)
 	}
 	i = 0;
 	nb_arg = 0;
-	while (g_data.envp[i] && nb_arg < size)
+	while (g_data->envp[i] && nb_arg < size)
 	{
-		if (ft_skip(g_data.envp[i], exe->cmd))
+		if (ft_skip(g_data->envp[i], exe->cmd))
 			i++;
 		else
-			new_ev[nb_arg++] = ft_strdup(g_data.envp[i++]);
+			new_ev[nb_arg++] = ft_strdup(g_data->envp[i++], g_data);
 	}
 	new_ev[nb_arg] = NULL;
-	g_data.envp = new_ev;
-	g_data.exit_status = 0;
+	g_data->envp = new_ev;
+	exit_status = 0;
 	if (flag)
 		exit(0);
 }

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smallem <smallem@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/05 15:50:30 by smallem           #+#    #+#             */
-/*   Updated: 2023/08/05 15:55:36 by smallem          ###   ########.fr       */
+/*   Updated: 2023/08/17 00:49:01 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-char	**copy_envp(char **envp)
+char	**copy_envp(char **envp, t_data *g_data)
 {
 	char	**ev;
 	int		i;
@@ -24,7 +24,7 @@ char	**copy_envp(char **envp)
 	ev[i] = NULL;
 	i = -1;
 	while (envp[++i])
-		ev[i] = ft_strdup(envp[i]);
+		ev[i] = ft_strdup(envp[i], g_data);
 	return (ev);
 }
 

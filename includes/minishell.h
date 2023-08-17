@@ -6,7 +6,7 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 12:02:20 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/08/14 21:49:50 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/08/17 15:11:33 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,57 +71,46 @@ typedef struct s_exe
     pid_t                  *pids;
 }	t_exe;
 
-typedef struct  s_data
-{
-    int         exit_status;
-    char        **envp;
-    int         nb_pipe;
-    t_memlist   *mem_list;
-}   t_data;
+int         exit_status;
 
-t_data	g_data;
+// t_data	g_data;
 
-char	    *ms_swapstr(char *src, char *swap, size_t start, size_t len);
-char        *quote_str_get(char *str, size_t tk_count);
-int         ms_open(char **str, char token);
+char	    *ms_swapstr(char *src, char *swap, size_t *ints, t_data *g_data);
+char        *quote_str_get(char *str, size_t tk_count, t_data *g_data);
+int         ms_open(char **str, char token, t_data *g_data);
 size_t      ms_count_char(char *input, char c);
 int         ms_quote_skip(char *str, size_t i, char token);
-char        *ms_getenv(char *str);
+char        *ms_getenv(char *str, t_data *g_data);
 
-char	    **ms_split(char **str);
+char	    **ms_split(char **str, t_data *g_data);
 
-char	*ms_expention(char *input);
+char	*ms_expention(char *input, t_data *g_data);
 
-size_t      token_dollar(char **str, int index);
-size_t      token_quote(char **str, size_t i, char token);
-int         token_redirect(char **str, size_t index, int fd, char token);
-int         token_append(char **str, size_t index, int fd);
-size_t      token_heredoc(char **str, size_t index);
-void	launch(t_exe *exe);
+void	launch(t_exe *exe, t_data *g_data);
 
 
-t_exe       *ms_init(char *input);
+t_exe       *ms_init(char *input, t_data *g_data);
 
 void        ms_exit(t_error err);
 
 int	    check_cmd(char *cmd);
-char	*find_path(char *cmd);
-int     heredoc_handler(char **str, int index);
-int    expend_dollar(char **str, int i, bool flag);
+char	*find_path(char *cmd, t_data *g_data);
+int     heredoc_handler(char **str, int index, t_data *g_data);
+int     expend_dollar(char **str, int i, bool flag, t_data *g_data);
 void    close_pipe(int *fd);
 void    dup_in_out(int *fd, int *fd_prev);
-void	ft_unset(t_exe *exe, int flag);
-void	ft_pwd(t_exe *exe, int flag);
-void	ft_export(t_exe *exe, int flag);
-void	ft_env(t_exe *exe, int flag);
+void	ft_unset(t_exe *exe, int flag, t_data *g_data);
+void	ft_pwd(t_exe *exe, int flag, t_data *g_data);
+void	ft_export(t_exe *exe, int flag, t_data *g_data);
+void	ft_env(t_exe *exe, int flag, t_data *g_data);
 void	ft_echo(t_exe *exe, int flag);
-void	ft_cd(t_exe *exe, int flag);
+void	ft_cd(t_exe *exe, int flag, t_data *g_data);
 int 	ev_input_check(t_exe *exe);
-char	**copy_envp(char **envp);
+char	**copy_envp(char **envp, t_data *g_data);
 void	init_sig(struct sigaction *sa);
 void	child_p(void);
 
 int	termios_echoback(bool echo_ctl_chr);
-void ms_clean(char **str);
+void ms_clean(char **str, t_data *g_data);
 
 #endif

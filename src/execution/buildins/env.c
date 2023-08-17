@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smallem <smallem@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 05:21:54 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/08/07 12:49:55 by smallem          ###   ########.fr       */
+/*   Updated: 2023/08/17 01:48:56 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
-void	ft_env(t_exe *exe, int flag)
+void	ft_env(t_exe *exe, int flag, t_data *g_data)
 {
 	int	i;
 
@@ -25,12 +25,12 @@ void	ft_env(t_exe *exe, int flag)
 			return ;
 	}
 	i = 0;
-	while (g_data.envp[i])
+	while (g_data->envp[i])
 	{
-		ft_printf("%s\n", g_data.envp[i]);
+		ft_printf("%s\n", g_data->envp[i]);
 		i++;
 	}
-	g_data.exit_status = 0;
+	exit_status = 0;
 	if (flag == 1)
 		exit(0);
 }

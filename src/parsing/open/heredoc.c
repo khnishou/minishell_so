@@ -13,7 +13,7 @@
 
 #include "../../../includes/minishell.h"
 
-char *heredoc_expention(char *str)
+char *heredoc_expention(char *str, t_data *g_data)
 {
     int i;
 
@@ -21,14 +21,14 @@ char *heredoc_expention(char *str)
     while (str[i])
     {
         if (str[i] == TK_DOLLAR)
-            i = expend_dollar(&str, i, false);
+            i = expend_dollar(&str, i, false, g_data);
         else
             i++;
     }
     return (str);
 }
 
-static int open_heredoc(char *str, char *exit, int tk_count)
+static int open_heredoc(char *str, char *exit, int tk_count, t_data *g_data)
 {
     int     fd;
     char    *join;
@@ -37,11 +37,11 @@ static int open_heredoc(char *str, char *exit, int tk_count)
     line = NULL;
     join = NULL;
     ft_printf(GREEN);
-    while (ft_strncmp(line, ft_strjoin(exit, "\n"), ft_strlen(exit) + 1))
+    while (ft_strncmp(line, ft_strjoin(exit, "\n", g_data), ft_strlen(exit) + 1))
     {
         if (!tk_count && line)
-            line = heredoc_expention(line);
-        join = ft_strjoin(join, line);
+            line = heredoc_expention(line, g_data);
+        join = ft_strjoin(join, line, g_data);
         ft_printf("heredoc>  ");
         line = get_next_line(1);
     }
@@ -55,31 +55,30 @@ static int open_heredoc(char *str, char *exit, int tk_count)
     return (fd);
 }
 
-int heredoc_handler(char **str, int index)
+int heredoc_handler(char **str, int index, t_data *g_data)
 {
-	int  start;
-    int  i;
+	int  ints[2];
     int  tk_count;
     char    *exit;
     
-    i = index + 2;
-    while ((*str)[i] && (*str)[i] == TK_SPACE)
-        i++;
-    start = i;
+    ints[_j] = index + 2;
+    while ((*str)[ints[_j]] && (*str)[ints[_j]] == TK_SPACE)
+        ints[_j]++;
+    ints[_start] = ints[_j];
     tk_count = 0;
-    while ((*str)[i] && (*str)[i] != TK_SPACE && (*str)[i] != TK_PIPE)
-    {
-        if ((*str)[i] == TK_D_QUOTE || (*str)[i] == TK_S_QUOTE)
+    --ints[_j];
+    while ((*str)[++ints[_j]] && (*str)[ints[_j]] != TK_SPACE && (*str)[ints[_j]] != TK_PIPE)
+        if ((*str)[ints[_j]] == TK_D_QUOTE || (*str)[ints[_j]] == TK_S_QUOTE)
         {
-            i = ms_quote_skip((*str) , i, (*str)[i]);
+            ints[_j] = ms_quote_skip((*str) , ints[_j], (*str)[ints[_j]]);
             tk_count += 2;
         }
-        i++;
-    }
-    exit = quote_str_get(ft_substr((*str), start, i - start), tk_count);
-    *str = ms_swapstr(*str, NULL, index, i - index);
-    i = open_heredoc((*str), exit, tk_count);
-    close(i);
-    i = open("heredoc", O_RDWR | O_TRUNC | O_CREAT, 0000644);
-    return (i);
+    exit = quote_str_get(ft_substr((*str), ints[_start], ints[_j] - ints[_start], g_data), tk_count, g_data);
+    ints[_start] = index;
+    ints[_j] = ints[_j] - index;
+    *str = ms_swapstr(*str, NULL, (size_t *)ints, g_data);
+    ints[_j] = open_heredoc((*str), exit, tk_count, g_data);
+    close(ints[_j]);
+    ints[_j] = open("heredoc", O_RDWR | O_TRUNC | O_CREAT, 0000644);
+    return (ints[_j]);
 }

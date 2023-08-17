@@ -6,7 +6,7 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:45:42 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/07/25 01:42:00 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/08/16 23:46:55 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int	in_set(char const c, char const *set)
 	return (0);
 }
 
-char	*ft_strtrim(char const *s, char const *set)
+char	*ft_strtrim(char const *s, char const *set, t_data *g_data)
 {
 	int	start;
 	int	end;
@@ -43,5 +43,5 @@ char	*ft_strtrim(char const *s, char const *set)
 	if (!(start == (int) ft_strlen(s)))
 		while (in_set(s[end], set))
 			end--;
-	return (ft_substr(s, start, end - start + 1));
+	return (ft_substr(s, start, end - start + 1, g_data));
 }

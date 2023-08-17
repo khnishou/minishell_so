@@ -6,7 +6,7 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/29 03:57:01 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/08/04 22:17:54 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/08/17 00:00:52 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,38 +34,40 @@ static size_t ft_char_count(char *str)
     return (end - start);
 }
 
-char *compact_space(int i, int j, int is_previous_separator, char *str)
+char *compact_space(int ints[3], char *str, t_data *g_data)
 {
     size_t len = ft_char_count(str);
-    char *result = (char *)ft_malloc(&(g_data.mem_list), sizeof(char) * (len + 1));
+    char *result = (char *)ft_malloc(&(g_data->mem_list), sizeof(char) * (len + 1));
     if (result == NULL)
         return NULL;
 
-    while (i < (int)ft_strlen(str))
+    while (ints[_i] < (int)ft_strlen(str))
     {
-        if (str[i] == ' ' || str[i] == '\t' || str[i] == '\n')
+        if (str[ints[_i]] == ' ' || str[ints[_i]] == '\t' || str[ints[_i]] == '\n')
         {
-            if (!is_previous_separator)
-                result[j++] = ' ';
-            is_previous_separator = 1;
+            if (!ints[_is_previous_separator])
+                result[ints[_j]++] = ' ';
+            ints[_is_previous_separator] = 1;
         }
         else
         {
-            result[j++] = str[i];
-            is_previous_separator = 0;
+            result[ints[_j]++] = str[_i];
+            ints[_is_previous_separator] = 0;
         }
-        i++;
+        ints[_i]++;
     }
-    result[j] = '\0';
+    result[ints[_j]] = '\0';
     return result;
 }
 
-char *ft_delsep(char *str)
+char *ft_delsep(char *str, t_data *g_data)
 {
-    int j = 0;
-    int i = 0;
-    int is_previous_separator = 0;
+    int ints[3];
+    
+    ints[0] = 0;
+    ints[1] = 0;
+    ints[2] = 0;
     if (!str)
         return NULL;
-    return (ft_strtrim(compact_space(i, j, is_previous_separator, str), " "));
+    return (ft_strtrim(compact_space(ints, str, g_data), " ", g_data));
 }
