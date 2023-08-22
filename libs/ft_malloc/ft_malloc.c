@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_malloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smallem <smallem@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 17:06:07 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/08/07 19:03:47 by smallem          ###   ########.fr       */
+/*   Updated: 2023/08/20 21:25:41 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	ft_addlst(t_memlist **lst, t_memlist *node)
 		tmp->next = node;
 	}
 }
-	
+
 void	*ft_malloc(t_memlist **lst, size_t size)
 {
 	void	*ptr;

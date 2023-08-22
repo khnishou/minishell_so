@@ -6,63 +6,65 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 05:21:58 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/08/17 01:49:03 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/08/21 17:35:12 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
-
-void	ft_export(t_exe *exe, int flag, t_data *g_data)
+static char	**ft_export2(int *fc, t_exe *exe, int flag, t_data *g)
 {
-	int		nb_arg;
+	char	**new_ev;
+
+	fc[1] = 0;
+	while (g->envp[fc[1]])
+		fc[1]++;
+	new_ev = ft_malloc(&g->mem_list, sizeof(char *) * (fc[1] + fc[0] + 1));
+	if (new_ev == NULL)
+	{
+		if (flag)
+		{
+			g_exit_status = 1;
+			exit(1);
+		}
+		else
+			return (NULL);
+	}
+	fc[1] = -1;
+	while (g->envp[++fc[1]])
+		new_ev[fc[1]] = ft_strdup(g->envp[fc[1]], g);
+	fc[0] = 1;
+	while (exe->cmd[fc[0]])
+		new_ev[fc[1]++] = ft_strdup(exe->cmd[fc[0]++], g);
+	new_ev[fc[1]] = NULL;
+	return (new_ev);
+}
+
+void	ft_export(t_exe *exe, int flag, t_data *g)
+{
+	int		fc[2];
 	char	**val;
 	char	**new_ev;
-	int		i;
-	int		size;
 
 	if (!ev_input_check(exe))
 	{
-		// invalid input format error msg
 		if (flag)
 			exit(1);
 		else
 			return ;
 	}
-	nb_arg = 0;
-	while (exe->cmd[nb_arg])
-		nb_arg++;
-	if (nb_arg - 1 == 0)
-		ft_env(exe, 0, g_data);
+	fc[0] = 0;
+	while (exe->cmd[fc[0]])
+		fc[0]++;
+	if (fc[0] - 1 == 0)
+		ft_env(exe, 0, g);
 	else
 	{
-		i = -1;
-		while (g_data->envp[++i])
-			;
-		size = i + nb_arg;
-		new_ev = malloc(sizeof(char *) * (size + 1));
-		if (new_ev == NULL)
-		{
-			ms_exit(MALLOC_ERR); 
-			if (flag)
-			exit(1);
-		else
+		g->envp = ft_export2(fc, exe, flag, g);
+		if (!g->envp)
 			return ;
-		}
-		i = -1;
-		while (g_data->envp[++i])
-			new_ev[i] = ft_strdup(g_data->envp[i], g_data);
-		nb_arg = 1;
-		while (exe->cmd[nb_arg])
-		{
-			new_ev[i] = ft_strdup(exe->cmd[nb_arg], g_data);
-			i++;
-			nb_arg++;
-		}
-		new_ev[i] = NULL;
-		g_data->envp = new_ev;
 	}
-	exit_status = 0;
+	g_exit_status = 0;
 	if (flag)
-		exit(0);
+		exit(g_exit_status);
 }

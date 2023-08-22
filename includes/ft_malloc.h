@@ -6,12 +6,12 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 16:48:09 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/08/04 22:11:43 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/08/20 22:16:51 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MEMORY_H
-# define MEMORY_H
+#ifndef FT_MALLOC_H
+# define FT_MALLOC_H
 
 # include <unistd.h>
 # include <stdlib.h>

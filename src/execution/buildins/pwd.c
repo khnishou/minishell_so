@@ -6,7 +6,7 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/29 16:14:35 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/08/17 01:49:13 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/08/20 21:29:00 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ void	ft_pwd(t_exe *exe, int flag, t_data *g_data)
 	if (getcwd(cwd, sizeof(cwd)) != NULL)
 	{
 		ft_printf("%s\n", cwd);
-		exit_status = 0;
+		g_exit_status = 0;
 	}
 	else
-		exit_status = errno;
+		g_exit_status = errno;
 	if (flag)
 		exit(0);
 }

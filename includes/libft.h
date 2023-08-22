@@ -6,7 +6,7 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/29 13:26:17 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/08/17 01:48:11 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/08/20 22:14:43 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,24 +17,14 @@
 # include <stdint.h>
 # include <unistd.h>
 # include <limits.h>
-// #include "./minishell.h"
 # include "./ft_malloc.h"
 
-#define _size 0
-#define _env_len 1
-#define _i 0
-#define _start 0
-#define _len 1
-#define _j 1
-#define _fd 1
-#define _is_previous_separator 2
-
-typedef struct  s_data
+typedef struct s_data
 {
-    char        **envp;
-    int         nb_pipe;
-    t_memlist   *mem_list;
-}   t_data;
+	char		**envp;
+	int			nb_pipe;
+	t_memlist	*mem_list;
+}	t_data;
 
 typedef struct s_list
 {
@@ -52,7 +42,6 @@ int				ft_isprint(int c);
 //				ft_mem
 void			ft_bzero(void *s, size_t n);
 void			*ft_calloc(size_t count, size_t size, t_data *g_data);
-// void			*ft_calloc(size_t count, size_t size);
 void			*ft_memchr(const void *s, int c, size_t n);
 void			*ft_memset(void *s, int c, size_t n);
 int				ft_memcmp(const void *s1, const void *s2, size_t n);
@@ -76,20 +65,17 @@ unsigned int	ft_strlcat(char *dest, const char *src, unsigned int size);
 char			*ft_strjoin(char *s1, char *s2, t_data *g_data);
 char			*ft_strtrim(char const *s, char const *set, t_data *g_data);
 char			*ft_strdup(const char *s, t_data *g_data);
-// char			*ft_strdup(const char *s);
-char			*ft_substr(char const *s, unsigned int start, size_t len, t_data *g_data);
-// char			*ft_substr(char const *s, unsigned int start, size_t len);
+char			*ft_substr(char const *s, unsigned int t, size_t l, t_data *g);
 char			**ft_split(char const *s, char c, t_data *g_data);
-char			*ft_strmapi(char const *s, char (*f)(unsigned int, char), t_data *g_data);
+char			*ft_strmapi(char const *s, char (*f)
+					(unsigned int, char), t_data *g);
 void			ft_striteri(char *s, void (*f)(unsigned int, char*));
 
 //				ft_to
 int				ft_tolower(int str);
 int				ft_toupper(int str);
 char			*ft_itoa(int n, t_data *g_data);
-// long int		ft_atoi(const char *str);
 
 char			*ft_delsep(char *str, t_data *g_data);
-// char			*ft_delsep(char *str);
 
 #endif

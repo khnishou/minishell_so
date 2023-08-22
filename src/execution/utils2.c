@@ -6,7 +6,7 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/05 15:50:30 by smallem           #+#    #+#             */
-/*   Updated: 2023/08/17 00:49:01 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/08/20 21:14:40 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	ev_input_check(t_exe *exe)
 	int	j;
 
 	i = 1;
-	while(exe->cmd[i])	
+	while (exe->cmd[i])
 	{
 		j = 0;
 		if (!ft_isalpha(exe->cmd[i][0]))

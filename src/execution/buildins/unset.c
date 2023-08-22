@@ -6,7 +6,7 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 05:22:02 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/08/17 01:49:20 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/08/21 19:08:08 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,49 +25,57 @@ static int	ft_skip(char *ev_line, char **cmd)
 	return (0);
 }
 
-void	ft_unset(t_exe *exe, int flag, t_data *g_data)
+static char	**ft_unset2(int *fc, t_exe *exe, int flag, t_data *g)
 {
 	char	**new_ev;
-	int		size;
-	int		i;
-	int		nb_arg;
 
-	if (exe->cmd[1] != NULL)
-	{
-		//error nessages too many args
-		if (flag)
-			exit(1);
-		else
-			return ;
-	}
-	i = -1;
-	while (g_data->envp[++i])
-		;
-	nb_arg = 1;
-	while (exe->cmd[nb_arg])
-		nb_arg++;
-	size = i - nb_arg + 1;
-	new_ev = malloc(sizeof(char *) * size);
+	new_ev = ft_malloc(&g->mem_list, sizeof(char *) * fc[0]);
 	if (new_ev == NULL)
 	{
-		//error
+		if (flag)
+			exit(1);
+		else
+		{
+			g_exit_status = 1;
+			return (NULL);
+		}
+	}
+	fc[1] = 0;
+	fc[2] = 0;
+	while (g->envp[fc[1]] && fc[2] < fc[0])
+	{
+		if (ft_skip(g->envp[fc[1]], exe->cmd))
+			fc[1]++;
+		else
+			new_ev[fc[2]++] = ft_strdup(g->envp[fc[1]++], g);
+	}
+	new_ev[fc[2]] = NULL;
+	return (new_ev);
+}
+
+void	ft_unset(t_exe *exe, int flag, t_data *g)
+{
+	char	**new_ev;
+	int		fc[3];
+
+	if (exe->cmd[1] == NULL)
+	{
 		if (flag)
 			exit(1);
 		else
 			return ;
 	}
-	i = 0;
-	nb_arg = 0;
-	while (g_data->envp[i] && nb_arg < size)
-	{
-		if (ft_skip(g_data->envp[i], exe->cmd))
-			i++;
-		else
-			new_ev[nb_arg++] = ft_strdup(g_data->envp[i++], g_data);
-	}
-	new_ev[nb_arg] = NULL;
-	g_data->envp = new_ev;
-	exit_status = 0;
+	fc[1] = 0;
+	while (g->envp[fc[1]])
+		fc[1]++;
+	fc[2] = 1;
+	while (exe->cmd[fc[2]])
+		fc[2]++;
+	fc[0] = fc[1] - fc[2] + 1;
+	g->envp = ft_unset2(fc, exe, flag, g);
+	if (!(g->envp))
+		return ;
+	g_exit_status = 0;
 	if (flag)
 		exit(0);
 }
