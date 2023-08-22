@@ -6,7 +6,7 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 18:54:56 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/08/22 17:01:36 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/08/22 17:37:27 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,8 +106,14 @@ int	ms_open(char **str, char token, t_data *g_data)
 			else
 				ints[1] = single_redirect(str, ints, token, g_data);
 		}
+		if (*str == NULL)
+			*str = ft_strdup("", g_data);
+		// the two lines above keep it from segfaulting, something is happening with ur swapstr
+		// in the previous version at this point *str is an empty string but in this version 
+		// *str is null, so im dupping empty string and its no longer segfaulting
+		// so up 2 u how u wanna deal with this
 		ints[0]++;
-//segfault
+
 	}
 	return (ints[1]);
 }
