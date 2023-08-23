@@ -6,7 +6,7 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 18:52:38 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/08/22 06:02:11 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/08/22 22:57:21 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ t_exe	*ms_init(char *input, t_data *g)
 	while (i <= (size_t)g->nb_pipe)
 	{
 		exe[i].index = i;
-		exe[i].fd_in = ms_open(&input, TK_LESS, g);
-		exe[i].fd_out = ms_open(&input, TK_GREATER, g);
+		exe[i].fd_in = ms_open(&input, TK_LESS, g, i);
+		exe[i].fd_out = ms_open(&input, TK_GREATER, g, i);
 		ms_clean(&input, g);
 		exe[i].cmd = ms_split(&input, g);
 		if (i != (size_t)g->nb_pipe)

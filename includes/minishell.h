@@ -6,7 +6,7 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 12:02:20 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/08/22 05:49:11 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/08/23 18:05:21 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int		g_exit_status;
 
 char	*ms_swapstr(char *src, char *swap, size_t *ints, t_data *g_data);
 char	*get_q(char *str, size_t tk_count, t_data *g_data);
-int		ms_open(char **str, char token, t_data *g_data);
+int		ms_open(char **str, char token, t_data *g_data, int i);
 size_t	ms_count_char(char *input, char c);
 int		ms_quote_skip(char *str, size_t i, char token);
 char	*ms_getenv(char *str, t_data *g_data);
@@ -92,7 +92,7 @@ void	ms_exit(t_error err);
 
 int		check_cmd(char *cmd);
 char	*find_path(char *cmd, t_data *g_data);
-int		heredoc_handler(char **str, int index, t_data *g_data);
+int     heredoc_handler(char **str, int index, int i, int ff, t_data *g);
 int		expend_dollar(char **str, int i, bool flag, t_data *g_data);
 void	close_pipe(int *fd);
 void	dup_in_out(int *fd, int *fd_prev);

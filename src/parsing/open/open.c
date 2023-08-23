@@ -6,13 +6,13 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 18:54:56 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/08/22 17:37:27 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/08/23 18:05:10 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
-int	single_redirect(char **str, int *ints, char token, t_data *g_data)
+int	single_redirect(char **str, size_t *ints, char token, t_data *g_data)
 {
 	int	start;
 	int	i;
@@ -70,29 +70,30 @@ int	append_handler(char **str, int index, t_data *g_data)
 	return (fd);
 }
 
-int	double_redirect(char **str, size_t index, char token, t_data *g_data)
+int	double_redirect(char **str, size_t *fc, char token, t_data *g_data)
 {
 	int	i;
 	int	fd;
 
-	i = index + 2;
+	i = fc[0] + 2;
 	while ((*str)[i] && (*str)[i] == TK_SPACE)
 		i++;
 	if ((*str)[i] == TK_PIPE)
 		return (-2);
 	if (token == TK_GREATER)
-		fd = append_handler(str, index, g_data);
+		fd = append_handler(str, fc[0], g_data);
 	else if (token == TK_LESS)
-		fd = heredoc_handler(str, index, g_data);
+		fd = heredoc_handler(str, fc[0], fc[1], fc[2], g_data);
 	return (fd);
 }
 
-int	ms_open(char **str, char token, t_data *g_data)
+int	ms_open(char **str, char token, t_data *g_data, int i)
 {
-	int	ints[2];
+	size_t	ints[3];
 
 	ints[0] = 0;
 	ints[1] = 0;
+	ints[2] = i;
 	while ((*str)[ints[0]] && (*str)[ints[0]] != TK_PIPE)
 	{
 		if ((*str)[ints[0]] == token)
@@ -101,19 +102,12 @@ int	ms_open(char **str, char token, t_data *g_data)
 			{
 				if (ints[1] > 0)
 					close(ints[1]);
-				ints[1] = double_redirect(str, ints[0], token, g_data);
+				ints[1] = double_redirect(str, (size_t *) ints, token, g_data);
 			}
 			else
 				ints[1] = single_redirect(str, ints, token, g_data);
 		}
-		if (*str == NULL)
-			*str = ft_strdup("", g_data);
-		// the two lines above keep it from segfaulting, something is happening with ur swapstr
-		// in the previous version at this point *str is an empty string but in this version 
-		// *str is null, so im dupping empty string and its no longer segfaulting
-		// so up 2 u how u wanna deal with this
 		ints[0]++;
-
 	}
 	return (ints[1]);
 }
