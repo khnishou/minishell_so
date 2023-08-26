@@ -6,7 +6,7 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/29 13:26:17 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/08/20 22:14:43 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/08/27 00:31:46 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ typedef struct s_data
 {
 	char		**envp;
 	int			nb_pipe;
+	bool		h_flag;
 	t_memlist	*mem_list;
 }	t_data;
 

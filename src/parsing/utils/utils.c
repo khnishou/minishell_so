@@ -6,16 +6,16 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 19:30:46 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/08/23 00:24:17 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/08/26 03:52:49 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
-size_t	ms_count_char(char *input, char c)
+int	ms_count_char(char *input, char c)
 {
-	size_t	nbr;
-	size_t	i;
+	int	nbr;
+	int	i;
 
 	nbr = 0;
 	i = 0;
@@ -31,12 +31,12 @@ size_t	ms_count_char(char *input, char c)
 	return (nbr);
 }
 
-char	*ms_swapstr(char *src, char *swap, size_t *ints, t_data *g_data)
+char	*ms_swapstr(char *src, char *swap, int *ints, t_data *g_data)
 {
 	int		i;
 	char	*res;
 	int		end;
-	size_t	src_len;
+	int		src_len;
 
 	src_len = ft_strlen(src);
 	if (!src || ints[0] >= src_len)
@@ -59,7 +59,7 @@ char	*ms_swapstr(char *src, char *swap, size_t *ints, t_data *g_data)
 	return (res);
 }
 
-int	ms_quote_skip(char *str, size_t i, char token)
+int	ms_quote_skip(char *str, int i, char token)
 {
 	i++;
 	while (str[i] && str[i] != token)
@@ -69,10 +69,10 @@ int	ms_quote_skip(char *str, size_t i, char token)
 	return (i);
 }
 
-char	*get_q(char *str, size_t c, t_data *g_data)
+char	*get_q(char *str, int c, t_data *g_data)
 {
-	size_t	i;
-	size_t	j;
+	int		i;
+	int		j;
 	char	token;
 	char	*res;
 
@@ -100,7 +100,7 @@ char	*get_q(char *str, size_t c, t_data *g_data)
 
 char	*ms_getenv(char *str, t_data *g_data)
 {
-	size_t	len;
+	int		len;
 	char	**env;
 
 	env = g_data->envp;

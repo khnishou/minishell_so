@@ -6,7 +6,7 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/15 20:01:21 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/08/20 21:39:51 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/08/26 03:53:08 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	*parse_str(char *str)
 {
-	size_t	i;
+	int	i;
 
 	i = -1;
 	while (str[++i])
@@ -41,7 +41,7 @@ char	*parse_str(char *str)
 
 char	**ms_split(char **str, t_data *g_data)
 {
-	size_t	ints[2];
+	int		ints[2];
 	char	**cmd;
 	char	*str1;
 	char	*tmp;

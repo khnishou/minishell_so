@@ -6,7 +6,7 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 16:33:25 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/08/23 00:21:01 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/08/26 03:54:58 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	expend_heredoc(char *str, int i)
 
 int	expend_dollar(char **str, int i, bool flag, t_data *g)
 {
-	size_t	fc[2];
+	int		fc[2];
 	char	*env;
 
 	fc[0] = 1;

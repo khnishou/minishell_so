@@ -6,7 +6,7 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 14:23:57 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/08/22 14:30:21 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/08/26 20:02:13 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,22 +22,29 @@ void	init_g(char **envp, char *input, t_data *g_data)
 	}
 }
 
+char	*ms_read_line(t_data *g_data)
+{
+	char	*input;
+	char	*read_line;
+
+	read_line = readline("➜  ");
+	input = ft_strtrim(read_line, " \t", g_data);
+	free (read_line);
+	return (input);
+}
+
 static void	shell_loop(char **envp, t_data *g_data)
 {
 	char	*input;
+	char	*read_line;
 	t_exe	*exe;
 
 	while (true)
 	{
 		ft_printf(MAGENTA);
 		termios_echoback(false);
-		if (!isatty(fileno(stdin)))
-		{
-			ft_printf("➜  ");
-			input = ft_strtrim(get_next_line(fileno(stdin)), " \t", g_data);
-		}
-		else
-			input = ft_strtrim(readline("➜  "), " \t", g_data);
+		if (isatty(fileno(stdin)))
+			input = ms_read_line(g_data);
 		if (input && input[0])
 		{
 			if (!ft_strncmp(input, "exit", ft_strlen("exit") + 1))
@@ -67,5 +74,6 @@ int	main(int argc, char *argv[], char *envp[])
 		printf(RED"args will be ignored\n\n"RESET);
 	shell_loop(envp, &g_data);
 	free_lst(&(g_data.mem_list));
+	system("leaks minishell");
 	return (0);
 }

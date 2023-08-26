@@ -6,7 +6,7 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 05:12:39 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/08/20 22:27:29 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/08/26 06:17:41 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ char	*find_path(char *cmd, t_data *g_data)
 	char	*tmp_f;
 	int		i;
 
+	if (!access(cmd, X_OK))
+		return (cmd);
 	p_path = path_find(g_data);
 	i = -1;
 	while (p_path[++i])
@@ -57,6 +59,7 @@ char	*find_path(char *cmd, t_data *g_data)
 		if (!access(tmp_f, X_OK))
 			return (tmp_f);
 	}
+	g_exit_status = 127;
 	ft_printf("%s: command not found\n", cmd);
 	return (NULL);
 }
