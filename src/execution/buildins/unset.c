@@ -6,7 +6,7 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 05:22:02 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/08/21 19:08:08 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/08/27 20:01:45 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	ft_unset(t_exe *exe, int flag, t_data *g)
 	char	**new_ev;
 	int		fc[3];
 
-	if (exe->cmd[1] == NULL)
+	if (exe->cmd[1] == NULL || !ms_getenv(exe->cmd[1], g))
 	{
 		if (flag)
 			exit(1);

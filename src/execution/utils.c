@@ -6,13 +6,13 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 05:12:39 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/08/26 06:17:41 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/08/27 20:37:16 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static char	**path_find(t_data *g_data)
+static char	**extract_path(t_data *g_data)
 {
 	int		i;
 	char	**ch;
@@ -24,6 +24,8 @@ static char	**path_find(t_data *g_data)
 			break ;
 		i++;
 	}
+	if (i >= ms_tablen(g_data->envp))
+		return (NULL);
 	ch = ft_split(g_data->envp[i] + ft_strlen("PATH="), ':', g_data);
 	return (ch);
 }
@@ -50,14 +52,16 @@ char	*find_path(char *cmd, t_data *g_data)
 
 	if (!access(cmd, X_OK))
 		return (cmd);
-	p_path = path_find(g_data);
+	p_path = extract_path(g_data);
 	i = -1;
-	while (p_path[++i])
+	if (p_path)
 	{
-		tmp = ft_strjoin("/", cmd, g_data);
-		tmp_f = ft_strjoin(p_path[i], tmp, g_data);
-		if (!access(tmp_f, X_OK))
-			return (tmp_f);
+		while (p_path[++i])
+		{
+			tmp_f = ft_strjoin(p_path[i], ft_strjoin("/", cmd, g_data), g_data);
+			if (!access(tmp_f, X_OK))
+				return (tmp_f);
+		}
 	}
 	g_exit_status = 127;
 	ft_printf("%s: command not found\n", cmd);

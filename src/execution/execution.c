@@ -6,7 +6,7 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 18:54:38 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/08/27 00:42:20 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/08/27 00:53:54 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static void	execute_command(t_exe *exe, t_exe *exe_prev, t_data *g)
 		dup2(exe->fd_in, 0);
 		close(exe->fd_in);
 		if (exe->h_flag)
-			unlink(ft_strjoin("obj/.", ft_itoa(exe->index, g)));
+			unlink(ft_strjoin("obj/.", ft_itoa(exe->index, g), g));
 	}
 	if (exe->fd_out)
 	{
@@ -113,5 +113,4 @@ void	launch(t_exe *exe, t_data *g)
 		while (++i <= g->nb_pipe)
 			waitpid(exe->pids[i], NULL, 0);
 	}
-	// if (exe[]->h_flag)
 }

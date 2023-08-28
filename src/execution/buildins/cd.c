@@ -6,7 +6,7 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 05:21:42 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/08/22 22:51:26 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/08/27 19:45:25 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ void	ft_cd(t_exe *exe, int flag, t_data *g_data)
 
 	if (exe->cmd[1] == NULL)
 		chdir(ms_getenv("HOME", g_data));
+	else if (!ft_strncmp(exe->cmd[1], "-", 2))
+		chdir(ms_getenv("OLDPWD", g_data));
 	else if (chdir(exe->cmd[1]) == -1)
 	{
 		ft_printf("cd: %s: No such file or directory\n", exe->cmd[1]);

@@ -6,7 +6,7 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 23:30:46 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/08/26 20:16:21 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/08/27 00:47:28 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static int	open_heredoc(char *str, char *exit, int *fc, t_data *g)
 	if (fd == -1)
 		return (-1);
 	write(fd, join, ft_strlen(join));
-	ft_printf(RESET);
+	ft_printf(RED);
 	return (fd);
 }
 

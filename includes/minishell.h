@@ -6,7 +6,7 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 12:02:20 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/08/27 00:31:40 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/08/27 20:28:14 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,5 +112,6 @@ void	child_p(void);
 
 int		termios_echoback(bool echo_ctl_chr);
 void	ms_clean(char **str, t_data *g_data);
+int		ms_tablen(char **tab);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 18:52:38 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/08/27 00:33:52 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/08/27 23:54:00 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,11 @@ t_exe	*ms_init(char *input, t_data *g)
 	int		i;
 
 	exe = (t_exe *) ft_malloc(&(g->mem_list), sizeof(t_exe) * (g->nb_pipe + 1));
-	if (!exe)
-		ms_exit(MALLOC_ERR);
 	input = ms_expention(input, g);
-	i = 0;
-	while (i <= (int)g->nb_pipe)
+	if (!input)
+		return (NULL);
+	i = -1;
+	while (++i <= (int)g->nb_pipe)
 	{
 		exe[i].index = i;
 		exe[i].fd_in = ms_open(&input, TK_LESS, g, i);
@@ -56,7 +56,6 @@ t_exe	*ms_init(char *input, t_data *g)
 			exe[i].path = find_path(exe[i].cmd[0], g);
 		else
 			exe[i].path = NULL;
-		i++;
 	}
 	return (exe);
 }

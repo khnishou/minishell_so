@@ -6,7 +6,7 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 16:33:25 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/08/26 03:54:58 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/08/28 00:15:11 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,8 @@ int	expend_quote(char **str, int i, char token, t_data *g_data)
 	}
 	if (!(*str)[i])
 	{
-		ft_printf("syntax error\n");
+		ft_printf(RED"minishell :syntax error\n"CYAN);
+		g_exit_status = 1;
 		return (-1);
 	}
 	i++;

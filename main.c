@@ -6,7 +6,7 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 14:23:57 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/08/26 20:02:13 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/08/28 06:32:55 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	init_g(char **envp, char *input, t_data *g_data)
 {
+	g_data->h_flag = false;
 	g_data->nb_pipe = ms_count_char(input, TK_PIPE);
 	if (!g_data->envp)
 	{
@@ -41,7 +42,7 @@ static void	shell_loop(char **envp, t_data *g_data)
 
 	while (true)
 	{
-		ft_printf(MAGENTA);
+		ft_printf(CYAN);
 		termios_echoback(false);
 		if (isatty(fileno(stdin)))
 			input = ms_read_line(g_data);
@@ -52,9 +53,8 @@ static void	shell_loop(char **envp, t_data *g_data)
 			add_history(input);
 			init_g(envp, input, g_data);
 			exe = ms_init(input, g_data);
-			if (!exe)
-				ms_exit(QLAWI_ERR);
-			launch(exe, g_data);
+			if (exe)
+				launch(exe, g_data);
 		}
 		else if (input == NULL)
 			break ;
@@ -71,9 +71,8 @@ int	main(int argc, char *argv[], char *envp[])
 	init_sig(&sa);
 	(void) argv;
 	if (argc != 1)
-		printf(RED"args will be ignored\n\n"RESET);
+		printf(RED"\nargs will be ignored\n\n"CYAN);
 	shell_loop(envp, &g_data);
 	free_lst(&(g_data.mem_list));
-	system("leaks minishell");
 	return (0);
 }

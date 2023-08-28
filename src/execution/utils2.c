@@ -6,7 +6,7 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/05 15:50:30 by smallem           #+#    #+#             */
-/*   Updated: 2023/08/20 21:14:40 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/08/27 20:37:31 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	**copy_envp(char **envp, t_data *g_data)
 	i = -1;
 	while (envp[++i])
 		;
-	ev = malloc(sizeof(char *) * (i + 1));
+	ev = ft_malloc(&g_data->mem_list, sizeof(char *) * (i + 1));
 	ev[i] = NULL;
 	i = -1;
 	while (envp[++i])
@@ -49,4 +49,15 @@ int	ev_input_check(t_exe *exe)
 		i++;
 	}
 	return (1);
+}
+
+int	ms_tablen(char **tab)
+{
+	int	i;
+
+	i = 0;
+	if (tab)
+		while (tab[i])
+			i++;
+	return (i);
 }
