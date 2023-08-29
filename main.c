@@ -6,7 +6,7 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 14:23:57 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/08/28 06:32:55 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/08/29 19:21:27 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,5 +74,6 @@ int	main(int argc, char *argv[], char *envp[])
 		printf(RED"\nargs will be ignored\n\n"CYAN);
 	shell_loop(envp, &g_data);
 	free_lst(&(g_data.mem_list));
+	ms_exit(VALID);
 	return (0);
 }

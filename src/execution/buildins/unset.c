@@ -6,7 +6,7 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 05:22:02 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/08/27 20:01:45 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/08/29 19:27:35 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	ft_skip(char *ev_line, char **cmd)
 	return (0);
 }
 
-static char	**ft_unset2(int *fc, t_exe *exe, int flag, t_data *g)
+static char	**bd_unset2(int *fc, t_exe *exe, int flag, t_data *g)
 {
 	char	**new_ev;
 
@@ -53,7 +53,7 @@ static char	**ft_unset2(int *fc, t_exe *exe, int flag, t_data *g)
 	return (new_ev);
 }
 
-void	ft_unset(t_exe *exe, int flag, t_data *g)
+void	bd_unset(t_exe *exe, int flag, t_data *g)
 {
 	char	**new_ev;
 	int		fc[3];
@@ -72,7 +72,7 @@ void	ft_unset(t_exe *exe, int flag, t_data *g)
 	while (exe->cmd[fc[2]])
 		fc[2]++;
 	fc[0] = fc[1] - fc[2] + 1;
-	g->envp = ft_unset2(fc, exe, flag, g);
+	g->envp = bd_unset2(fc, exe, flag, g);
 	if (!(g->envp))
 		return ;
 	g_exit_status = 0;

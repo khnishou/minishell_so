@@ -6,7 +6,7 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 18:54:38 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/08/27 00:53:54 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/08/29 19:42:12 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,19 @@
 static void	run_cmd(t_exe *exe, int flag, t_data *g)
 {
 	if (!ft_strncmp(exe->cmd[0], "cd", ft_strlen("cd") + 1))
-		ft_cd(exe, flag, g);
+		bd_cd(exe, flag, g);
 	else if (!ft_strncmp(exe->cmd[0], "pwd", ft_strlen("pwd") + 1))
-		ft_pwd(exe, flag, g);
+		bd_pwd(exe, flag, g);
 	else if (!ft_strncmp(exe->cmd[0], "export", ft_strlen("export") + 1))
-		ft_export(exe, flag, g);
+		bd_export(exe, flag, g);
 	else if (!ft_strncmp(exe->cmd[0], "unset", ft_strlen("unset") + 1))
-		ft_unset(exe, flag, g);
+		bd_unset(exe, flag, g);
 	else if (!ft_strncmp(exe->cmd[0], "env", ft_strlen("env") + 1))
-		ft_env(exe, flag, g);
+		bd_env(exe, flag, g);
 	else if (!ft_strncmp(exe->cmd[0], "echo", ft_strlen("echo") + 1))
-		ft_echo(exe, flag);
+		bd_echo(exe, flag);
+	else if (!ft_strncmp(exe->cmd[0], "exit", ft_strlen("exit") + 1))
+		bd_exit(exe, g);
 	else
 		ft_printf("%s: command not found\n", exe->cmd[0]);
 }

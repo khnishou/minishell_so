@@ -6,13 +6,13 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 05:21:58 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/08/21 17:35:12 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/08/29 19:28:23 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
-static char	**ft_export2(int *fc, t_exe *exe, int flag, t_data *g)
+static char	**bd_export2(int *fc, t_exe *exe, int flag, t_data *g)
 {
 	char	**new_ev;
 
@@ -40,7 +40,7 @@ static char	**ft_export2(int *fc, t_exe *exe, int flag, t_data *g)
 	return (new_ev);
 }
 
-void	ft_export(t_exe *exe, int flag, t_data *g)
+void	bd_export(t_exe *exe, int flag, t_data *g)
 {
 	int		fc[2];
 	char	**val;
@@ -57,10 +57,10 @@ void	ft_export(t_exe *exe, int flag, t_data *g)
 	while (exe->cmd[fc[0]])
 		fc[0]++;
 	if (fc[0] - 1 == 0)
-		ft_env(exe, 0, g);
+		bd_env(exe, 0, g);
 	else
 	{
-		g->envp = ft_export2(fc, exe, flag, g);
+		g->envp = bd_export2(fc, exe, flag, g);
 		if (!g->envp)
 			return ;
 	}

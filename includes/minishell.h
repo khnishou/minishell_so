@@ -6,7 +6,7 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 12:02:20 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/08/27 20:28:14 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/08/29 19:41:42 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ typedef enum e_error_code
 {
 	VALID,
 	MALLOC_ERR,
-	QLAWI_ERR,
 	ARGC_ERR,
 }	t_error;
 
@@ -99,12 +98,13 @@ int		heredoc_handler(char **str, int index, int ff, t_data *g);
 int		expend_dollar(char **str, int i, bool flag, t_data *g_data);
 void	close_pipe(int *fd);
 void	dup_in_out(int *fd, int *fd_prev);
-void	ft_unset(t_exe *exe, int flag, t_data *g_data);
-void	ft_pwd(t_exe *exe, int flag, t_data *g_data);
-void	ft_export(t_exe *exe, int flag, t_data *g_data);
-void	ft_env(t_exe *exe, int flag, t_data *g_data);
-void	ft_echo(t_exe *exe, int flag);
-void	ft_cd(t_exe *exe, int flag, t_data *g_data);
+void	bd_unset(t_exe *exe, int flag, t_data *g_data);
+void	bd_pwd(t_exe *exe, int flag, t_data *g_data);
+void	bd_export(t_exe *exe, int flag, t_data *g_data);
+void	bd_env(t_exe *exe, int flag, t_data *g_data);
+void	bd_echo(t_exe *exe, int flag);
+void	bd_cd(t_exe *exe, int flag, t_data *g_data);
+void	bd_exit(t_exe *exe, t_data *g_data);
 int		ev_input_check(t_exe *exe);
 char	**copy_envp(char **envp, t_data *g_data);
 void	init_sig(struct sigaction *sa);

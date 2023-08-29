@@ -6,7 +6,7 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 05:21:49 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/08/26 04:52:11 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/08/29 19:28:37 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static bool	is_option(char *str)
 	return (true);
 }
 
-static bool	ft_echo2(int len, int i, bool no_new_line, t_exe *exe)
+static bool	bd_echo2(int len, int i, bool no_new_line, t_exe *exe)
 {
 	while (i < len)
 	{
@@ -52,7 +52,7 @@ static bool	ft_echo2(int len, int i, bool no_new_line, t_exe *exe)
 	return (no_new_line);
 }
 
-void	ft_echo(t_exe *exe, int flag)
+void	bd_echo(t_exe *exe, int flag)
 {
 	int		len;
 	int		i;
@@ -70,7 +70,7 @@ void	ft_echo(t_exe *exe, int flag)
 		ft_putstr_fd("\n", exe->fd_out);
 		return ;
 	}
-	no_new_line = ft_echo2(len, i, no_new_line, exe);
+	no_new_line = bd_echo2(len, i, no_new_line, exe);
 	if (no_new_line == false)
 		ft_putstr_fd("\n", exe->fd_out);
 	if (flag)

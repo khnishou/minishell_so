@@ -6,7 +6,7 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 19:30:46 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/08/26 03:52:49 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/08/29 17:28:11 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,8 +103,9 @@ char	*ms_getenv(char *str, t_data *g_data)
 	int		len;
 	char	**env;
 
+	str = ft_strjoin(str, "=", g_data);
 	env = g_data->envp;
-	len = ft_strlen(str);
+	len = ft_strlen(str) - 1;
 	while (*env)
 	{
 		if (!ft_strncmp(str, *env, len))

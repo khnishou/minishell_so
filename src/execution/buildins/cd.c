@@ -6,7 +6,7 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 05:21:42 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/08/27 19:45:25 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/08/29 19:26:12 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static char	**update_envp(char	**envp, char *path, t_data *g)
 	return (update_envp2(size, envp, tmp, g));
 }
 
-void	ft_cd(t_exe *exe, int flag, t_data *g_data)
+void	bd_cd(t_exe *exe, int flag, t_data *g_data)
 {
 	char	cwd[1024];
 

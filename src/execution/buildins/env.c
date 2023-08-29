@@ -6,13 +6,13 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 05:21:54 by ykerdel           #+#    #+#             */
-/*   Updated: 2023/08/20 21:29:00 by ykerdel          ###   ########.fr       */
+/*   Updated: 2023/08/29 19:28:23 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
-void	ft_env(t_exe *exe, int flag, t_data *g_data)
+void	bd_env(t_exe *exe, int flag, t_data *g_data)
 {
 	int	i;
 
